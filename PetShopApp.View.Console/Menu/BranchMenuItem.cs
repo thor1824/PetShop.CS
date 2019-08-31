@@ -6,9 +6,9 @@ namespace PetShopApp.UI.ConsoleView.Menu
 {
     public class BranchMenuItem : IMenuItem
     {
-        private readonly int exitInput = 9;
+        private readonly int exitInput = 0;
         //private readonly int startingPage = 1;
-        private readonly string seperator = "--------------------------------------------------------";
+        private readonly string seperator = "---------------------------------------------------------------------------";
         private SortedList<int, IMenuItem> options;
         //private readonly SortedList<int, SortedList<int, IMenuItem>> pages;
         private readonly string name;
@@ -96,8 +96,6 @@ namespace PetShopApp.UI.ConsoleView.Menu
             //        i = 0;
             //        pages.Add(pageNumber, )
             //        }
-
-
             //    i++;
             //}
         }

@@ -6,7 +6,7 @@ namespace PetShopApp.Core.ApplicationService
 {
     public interface IPetService
     {
-        void CreatePet(Pet pet);
+        Pet CreatePet(Pet pet);
         Pet DeletePet(int id);
         List<Pet> ReadAllPet();
         Pet ReadPetByID(int id);

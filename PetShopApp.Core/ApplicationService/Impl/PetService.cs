@@ -3,6 +3,7 @@ using PetShopApp.Core.Entity;
 using PetShopApp.Core.Entity.Enum;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,14 +18,36 @@ namespace PetShopApp.Core.ApplicationService.Impl
             _repo = repo;
         }
 
-
-
-        public void CreatePet(Pet pet)
+        #region C.R.U.D
+        public Pet CreatePet(Pet pet)
         {
-            _repo.Create(pet);
+            Pet tempPet = pet;
+            if (CheckNameContainsNumbers(pet))
+            {
+                throw new InvalidDataException("Name can not contain a Numeric value.");
+            }
+            if (CheckNameTooShort(pet))
+            {
+                throw new InvalidDataException("Name is too short, it must be 3 or more character.");
+            }
+
+            pet = _repo.Create(pet);
+
+            if (!pet.HasId)
+            {
+                _repo.Delete(tempPet);
+                throw new InvalidOperationException("ID was Assigned properly. \nThe Funktion \"Creat New Owner\" does not work at the moment.");
+            }
+
+            return pet;
         }
         public Pet ReadPetByID(int id)
         {
+            if (!CheckIfExist(id))
+            {
+                throw new InvalidDataException("ID does not exsist.");
+            }
+
             return _repo.Read(id);
         }
         public List<Pet> ReadAllPet()
@@ -33,13 +56,29 @@ namespace PetShopApp.Core.ApplicationService.Impl
         }
         public Pet UpdatePet(Pet pet)
         {
-            return null;
+            if (CheckNameContainsNumbers(pet))
+            {
+                throw new InvalidDataException("Name can not contain a Numeric value.");
+            }
+            if (CheckNameTooShort(pet))
+            {
+                throw new InvalidDataException("Name is too short, it must be 3 or more character.");
+            }
+
+            return _repo.Update(pet);
         }
 
         public Pet DeletePet(int id)
         {
-            _repo.Delete(id);
-            return null;
+            Pet pet = ReadPetByID(id);
+            _repo.Delete(pet);
+
+            if (CheckIfExist(id))
+            {
+                throw new InvalidOperationException("Owner was not Deleted properly. \nThe Funktion \"Delete Owner\" does not work at the moment.");
+            }
+
+            return pet;
         }
 
         public List<Pet> SeachByType(PetType.PType type)
@@ -61,7 +100,53 @@ namespace PetShopApp.Core.ApplicationService.Impl
 
         public List<Pet> ReadAllByCheapest()
         {
-            return _repo.ReadAll().OrderByDescending(p1 => p1.Price).ToList();
+            return _repo.ReadAll().OrderBy(p1 => p1.Price).ToList();
         }
+        #endregion
+
+        #region Checks
+        private static bool CheckNameContainsNumbers(Pet pet)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (pet.Name.Contains(i + ""))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CheckNameTooShort(Pet pet)
+        {
+            if (pet.Name.Length < 3)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckIfExist(int id)
+        {
+            if (_repo.Read(id) == null)
+            {
+                return true;
+            }
+            return false;
+            //bool exist = false;
+            //foreach (var item in _repo.ReadAll().ToList())
+            //{
+            //    if (item.Id.Equals(id))
+            //    {
+            //        exist = true;
+            //    }
+            //}
+            //if (!exist)
+            //{
+            //    throw new InvalidDataException("ID does not exsist");
+            //}
+        }
+
+        #endregion
     }
 }

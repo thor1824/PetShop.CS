@@ -1,7 +1,9 @@
-﻿using PetShopApp.Core.DomainService;
+﻿using PetShop.Infrastructure.Data.MockDB;
+using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PetShop.Infrastructure.Data.Repositories
@@ -10,27 +12,32 @@ namespace PetShop.Infrastructure.Data.Repositories
     {
         public Owner Create(Owner entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Owner Delete(int id)
-        {
-            throw new NotImplementedException();
+            entity.Id = TestDB.GetFirstAvailableOwnerID();
+            TestDB.owners.Add(entity);
+            return entity;
         }
 
         public Owner Read(int id)
         {
-            throw new NotImplementedException();
+            return TestDB.GetOwnersInDB().First(pet => pet.Id == id);
         }
 
         public IEnumerable<Owner> ReadAll()
         {
-            throw new NotImplementedException();
+            return TestDB.GetOwnersInDB().ToList();
         }
 
         public Owner Update(Owner entity)
         {
-            throw new NotImplementedException();
+            Owner owner = TestDB.GetOwnersInDB().First(pet => pet.Id == entity.Id);
+            owner = entity;
+            return owner;
+        }
+
+        public Owner Delete(Owner entity)
+        {
+            TestDB.owners.Remove(entity);
+            return entity;
         }
     }
 }

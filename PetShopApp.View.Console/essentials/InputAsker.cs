@@ -6,7 +6,7 @@ namespace PetShopApp.UI.ConsoleView.essentials
 {
     public class InputAsker
     {
-        public int askForNumericInput(string message)
+        public static int AskForNumericInput(string message)
         {
             int num;
             Console.WriteLine(message);
@@ -15,20 +15,45 @@ namespace PetShopApp.UI.ConsoleView.essentials
                 Console.WriteLine("Not a Numeric Value. \n" +
                     "Please try again. ");
             }
+
             return num;
         }
 
-        public string askForTextInput(string message)
+        public static string AskForTextInput(string message)
         {
             Console.WriteLine(message);
+
             return Console.ReadLine();
         }
 
-        public void anyKeyInput(string message)
+        public static void anyKeyInput(string message)
         {
             Console.WriteLine(message);
             ConsoleKeyInfo option = Console.ReadKey();
+        }
 
+        public static DateTime AskForDate(string message)
+        {
+            Console.WriteLine(message);
+            bool validtion = false;
+            DateTime? dt = null;
+            while (!validtion)
+            {
+                try
+                {
+                    int year = AskForNumericInput("Enter Year:");
+                    int month = AskForNumericInput("Enter Month:");
+                    int date = AskForNumericInput("Enter Date:");
+                    dt = new DateTime(year, month, date);
+                    validtion = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+
+                }
+            }
+            return dt.Value;
         }
     }
 }

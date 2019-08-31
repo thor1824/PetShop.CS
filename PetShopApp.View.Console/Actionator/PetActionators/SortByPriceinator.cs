@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 {
-    public class SortByPriceinator : InputAsker, IActionator
+    public class SortByPriceinator : IActionator
     {
         private IPetService _service;
 
@@ -20,12 +20,20 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 
         public void go()
         {
-            foreach (var pet in _service.ReadAllPet())
+            try
             {
-                Console.WriteLine(pet);
+                foreach (var pet in _service.ReadAllByCheapest())
+                {
+                    Console.WriteLine(pet);
 
+                }
             }
-            anyKeyInput("Press any key to return");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+
         }
     }
 }

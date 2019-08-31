@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 {
-    public class FiveCheapestPetsinator : InputAsker, IActionator
+    public class FiveCheapestPetsinator : IActionator
     {
         private IPetService _service;
 
@@ -21,12 +21,17 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 
         public void go()
         {
-
-            for (int i = 0; i < 5; i++)
+            try
             {
-                Console.WriteLine(_service.ReadAllByCheapest()[i]);
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine(_service.ReadAllByCheapest()[i]);
+                }
             }
-            anyKeyInput("Press any key to return");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             
         }
     }

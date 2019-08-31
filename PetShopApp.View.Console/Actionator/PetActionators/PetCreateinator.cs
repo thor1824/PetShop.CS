@@ -7,51 +7,56 @@ using System.Text;
 
 namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 {
-    public class PetCreateinator : InputAsker, IActionator
+    public class PetCreateinator : IActionator
     {
-        private IPetService _petService;
+        private readonly IPetService _petService;
+        private readonly IOwnerService _ownerService;
 
-        public PetCreateinator(IPetService petService)
+
+        public PetCreateinator(IPetService petService, IOwnerService ownerService)
         {
             this._petService = petService;
+            this._ownerService = ownerService;
         }
 
         public void go()
         {
-            string name = askForTextInput("Enter Name, Must be more than 3 characters long:");
-
-            foreach (var item in _petService.getPetTypeInSortedList())
+            try
             {
-                Console.WriteLine("[" + item.Key + "] - " + item.Value.ToString());
+                string name = InputAsker.AskForTextInput("Enter Name, Must be more than 3 characters long:");
+
+                foreach (var item in _petService.getPetTypeInSortedList())
+                {
+                    Console.WriteLine("[" + item.Key + "] - " + item.Value.ToString());
+                }
+
+                int iType = InputAsker.AskForNumericInput("Pleace select the Pet Type");
+
+                var type = _petService.getPetTypeInSortedList()[iType];
+
+                DateTime bDay = InputAsker.AskForDate("Enter Birth Day:");
+
+                String color = InputAsker.AskForTextInput("Enter Color:");
+
+                double price = InputAsker.AskForNumericInput("Enter Price:");
+
+                Owner previousOwner = _ownerService.ReadOwner(InputAsker.AskForNumericInput("Enter id of owner"));
+
+                Pet newPet = new Pet
+                {
+                    Name = name,
+                    Type = type,
+                    BirthDate = bDay,
+                    Price = price,
+                    PriviousOwner = previousOwner,
+                    Color = color
+                };
+                Console.WriteLine("\nPet:" + _petService.CreatePet(newPet) + " was Created");
             }
-
-            int iType = askForNumericInput("Pleace select the Pet Type");
-
-            var type = _petService.getPetTypeInSortedList()[iType];
-
-            Console.WriteLine("Enter Birth Day:");
-            int year = askForNumericInput("Enter Year:");
-            int month = askForNumericInput("Enter Month:");
-            int date = askForNumericInput("Enter Date:");
-
-            DateTime bDay = new DateTime(year, month, date);
-
-            String color = askForTextInput("Enter Color:");
-
-            double price = askForNumericInput("Enter Price:");
-
-            string previousOwner = askForTextInput("Enter Name of previous Owner");
-
-            Pet newPet = new Pet {
-                Name = name,
-                Type = type,
-                BirthDate = bDay,
-                Price = price,
-                PriviousOwner = previousOwner,
-                Color = color
-            }; 
-            _petService.CreatePet(newPet);
-            anyKeyInput("\nPress any key to return");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

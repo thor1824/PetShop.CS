@@ -1,5 +1,6 @@
 ﻿using System;
 using PetShopApp.UI.ConsoleView.Actionator;
+using PetShopApp.UI.ConsoleView.essentials;
 
 namespace PetShopApp.UI.ConsoleView.Menu
 {
@@ -19,6 +20,9 @@ namespace PetShopApp.UI.ConsoleView.Menu
             Console.WriteLine(name);
             Console.WriteLine(seperator);
             actionator.go();
+            Console.WriteLine(seperator);
+            InputAsker.anyKeyInput("Press any key to return");
+
         }
 
         public string getName()

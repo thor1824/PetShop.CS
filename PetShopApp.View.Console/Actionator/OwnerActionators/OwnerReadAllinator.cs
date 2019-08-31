@@ -1,4 +1,6 @@
-﻿using PetShopApp.Core.DomainService;
+﻿using PetShopApp.Core.ApplicationService;
+using PetShopApp.Core.ApplicationService.Impl;
+using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
 using PetShopApp.UI.ConsoleView.essentials;
 using System;
@@ -9,16 +11,29 @@ namespace PetShopApp.UI.ConsoleView.Actionator.OwnerActionators
 {
     public class OwnerReadAllinator : InputAsker, IActionator
     {
-        private IRepository<Owner> _repo;
+        private readonly IOwnerService _ownerservice;
 
-        public OwnerReadAllinator(IRepository<Owner> repo)
+        public OwnerReadAllinator(IOwnerService ownerservice)
         {
-            _repo = repo;
+            _ownerservice = ownerservice;
         }
 
         public void go()
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (var item in _ownerservice.ReadAllOwner())
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+            
+            
         }
     }
 }

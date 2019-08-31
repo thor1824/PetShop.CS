@@ -12,26 +12,21 @@ namespace PetShop.Infrastructure.Data.Repositories
     {
         public Pet Create(Pet entity)
         {
-            entity.Id = TestDB.GetFirstAvailableID();
+            entity.Id = TestDB.GetFirstAvailablePetID();
             TestDB.pets.Add(entity);
             return entity;
         }
+
         public Pet Read(int id)
         {
-
-            foreach (Pet petFromDB in TestDB.GetPetsInDB())
-            {
-                if (petFromDB.Id.Equals(id))
-                {
-                    return petFromDB;
-                }
-            }
-            return null;
+            return TestDB.GetPetsInDB().First(p => p.Id == id);
         }
+
         public IEnumerable<Pet> ReadAll()
         {
             return TestDB.GetPetsInDB();
         }
+
         public Pet Update(Pet entity)
         {
             for (int i = 0; i < TestDB.GetPetsInDB().ToList().Count; i++)
@@ -44,10 +39,9 @@ namespace PetShop.Infrastructure.Data.Repositories
             }
             return null;
         }
-        public Pet Delete(int id)
-        {
 
-            Pet pet = TestDB.GetPetsInDB().First(p => p.Id == id);
+        public Pet Delete(Pet pet)
+        {
             TestDB.pets.Remove(pet);
             return pet;
         }

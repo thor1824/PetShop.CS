@@ -10,21 +10,21 @@ namespace PetShopApp.Core.Entity
     
     public class Pet
     {
-        private int id;
+        private int? id;
         private string name;
-        private PetType.PType type;
-        private DateTime birthDate;
-        private DateTime soldDate;
+        private PetType.PType? type;
+        private DateTime? birthDate;
+        private DateTime? soldDate;
         private string color;
-        private string priviousOwner;
-        private double price;
+        private Owner priviousOwner;
+        private double? price;
 
         public Pet()
         {
 
         }
 
-        public Pet(int id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, string priviousOwner, double price)
+        public Pet(int id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, Owner priviousOwner, double price)
         {
             this.id = id;
             this.name = name;
@@ -44,18 +44,24 @@ namespace PetShopApp.Core.Entity
 
         public override string ToString()
         {
-            return "[ID: " + id +", Name: " + name + ", Type: " + type.ToString() 
-                + ", Color: " + color + ", Price: " + price + ", Privious Owner: " + priviousOwner 
-                + ", Birthday: " + getFormatteDate(birthDate) + ", Date of Sale: " + (soldDate == null ? "N/A" : getFormatteDate(soldDate)) + "]";
+            return "[ID: " + id +
+                ", Name: " + name + 
+                ", Type: " + (type == null ? "N/A": type.Value.ToString()) + 
+                ", Color: " + color + 
+                ", Price: " + (price == null ? "N/A" : price.Value.ToString()) + 
+                ", Privious Owner: " + (priviousOwner == null ? "N/A" : priviousOwner.FirstName + " " + priviousOwner.LastName) + 
+                ", Birthday: " + (birthDate.Value == null ? "N/A" : getFormatteDate(birthDate.Value)) + 
+                ", Date of Sale: " + (soldDate == null ? "N/A" : getFormatteDate(soldDate.Value)) + "]";
         }
 
-        public int Id { get => id; set => id = value; }
+        public bool HasId { get { return id.HasValue; } }
+        public int Id { get => id.Value; set => id = value; }
         public string Name { get => name; set => name = value; }
-        public PetType.PType Type { get => type; set => type = value; }
-        public DateTime BirthDate { get => birthDate; set => birthDate = value; }
-        public DateTime SoldDate { get => soldDate; set => soldDate = value; }
-        public double Price { get => price; set => price = value; }
-        public string PriviousOwner { get => priviousOwner; set => priviousOwner = value; }
+        public PetType.PType Type { get => type.Value; set => type = value; }
+        public DateTime BirthDate { get => birthDate.Value; set => birthDate = value; }
+        public DateTime SoldDate { get => soldDate.Value; set => soldDate = value; }
+        public double Price { get => price.Value; set => price = value; }
+        public Owner PriviousOwner { get => priviousOwner; set => priviousOwner = value; }
         public string Color { get => color; set => color = value; }
 
     }

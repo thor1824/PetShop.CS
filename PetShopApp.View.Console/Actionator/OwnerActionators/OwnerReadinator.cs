@@ -10,13 +10,8 @@ namespace PetShopApp.UI.ConsoleView.Actionator.OwnerActionators
 {
     public class OwnerReadinator : InputAsker, IActionator
     {
-        private IRepository<Owner> _repo;
-        private IOwnerService ownerService;
 
-        public OwnerReadinator(IRepository<Owner> repo)
-        {
-            _repo = repo;
-        }
+        private IOwnerService ownerService;
 
         public OwnerReadinator(IOwnerService ownerService)
         {
@@ -25,9 +20,16 @@ namespace PetShopApp.UI.ConsoleView.Actionator.OwnerActionators
 
         public void go()
         {
-            throw new NotImplementedException();
+            try
+            {
+                int input = AskForNumericInput("Enter ID of owner:");
+
+                Console.WriteLine(ownerService.ReadOwner(input));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
-    
-    
 }

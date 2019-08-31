@@ -14,7 +14,7 @@ namespace PetShopApp.Core.DomainService
 
         T Update(T entity);
 
-        T Delete(int id);
+        T Delete(T entity);
         
     }
 }

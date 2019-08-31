@@ -8,14 +8,17 @@ using System.Text;
 
 namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
 {
-    public class PetUpdateinator : InputAsker, IActionator
+    public class PetUpdateinator : IActionator
     {
-        IPetService _petService;
-        private readonly int[] _validInputs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+        private readonly IPetService _petService;
+        private readonly IOwnerService _ownerService;
+        private readonly int[] _validInputs = { 1, 2, 3, 4, 5, 6, 7, 9, 0 };
 
-        public PetUpdateinator(IPetService petService)
+        public PetUpdateinator(IPetService petService, IOwnerService ownerService)
         {
-            _petService = petService;
+            this._petService = petService;
+            this._ownerService = ownerService;
+
         }
 
         public void go()
@@ -23,7 +26,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
             Pet pet = null;
             while (pet == null)
             {
-                int id = askForNumericInput("Please Enter the id of the movie you want to update.");
+                int id = InputAsker.AskForNumericInput("Please Enter the id of the movie you want to update.");
                 pet = _petService.ReadPetByID(id);
                 if (pet == null)
                 {
@@ -62,111 +65,103 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                     {
                         case 1:
                             Console.Clear();
-                            pet.Name = askForTextInput("Please enter new Title:");
+
+                            pet.Name = InputAsker.AskForTextInput("Please enter new Title:");
                             break;
+
                         case 2:
                             Console.Clear();
+
                             foreach (var item in _petService.getPetTypeInSortedList())
                             {
                                 Console.WriteLine("[" + item.Key + "] - " + item.Value.ToString());
                             }
-
-                            int iType = askForNumericInput("Pleace select the Pet Type");
-
+                            int iType = InputAsker.AskForNumericInput("Pleace select the Pet Type");
                             pet.Type = _petService.getPetTypeInSortedList()[iType];
-
                             break;
+
                         case 3:
                             Console.Clear();
-                            Console.WriteLine("Enter Birth Day:");
-                            int year = askForNumericInput("Enter Year:");
-                            int month = askForNumericInput("Enter Month:");
-                            int date = askForNumericInput("Enter Date:");
 
-                            pet.BirthDate = new DateTime(year, month, date);
+                            pet.BirthDate = InputAsker.AskForDate("Enter Birth Day:");
                             break;
+
                         case 4:
                             Console.Clear();
-                            pet.Color = askForTextInput("Enter Color:");
+
+                            pet.Color = InputAsker.AskForTextInput("Enter Color:");
                             break;
+
                         case 5:
                             Console.Clear();
-                            pet.Price = askForNumericInput("Enter Price:");
+
+                            pet.Price = InputAsker.AskForNumericInput("Enter Price:");
                             break;
+
                         case 6:
                             Console.Clear();
-                            pet.PriviousOwner = askForTextInput("Enter Name of previous Owner");
+
+                            pet.PriviousOwner = _ownerService.ReadOwner(InputAsker.AskForNumericInput("Enter id of owner"));
                             break;
+
                         case 7:
                             Console.Clear();
-                            Console.WriteLine("Enter Sold Date:");
-                            int sYear = askForNumericInput("Enter Year:");
-                            int sMonth = askForNumericInput("Enter Month:");
-                            int sDate = askForNumericInput("Enter Date:");
 
-                            pet.SoldDate = new DateTime(sYear, sMonth, sDate);
+                            pet.SoldDate = InputAsker.AskForDate("Enter Sold Date:");
                             break;
-                        
+
                         case 9:
                             Console.Clear();
-                            string name = askForTextInput("Enter Name, Must be more than 3 characters long:");
+
+                            string name = InputAsker.AskForTextInput("Enter Name, Must be more than 3 characters long:");
 
                             foreach (var item in _petService.getPetTypeInSortedList())
                             {
                                 Console.WriteLine("[" + item.Key + "] - " + item.Value.ToString());
                             }
 
-                            int iType2 = askForNumericInput("Pleace select the Pet Type");
+                            int iType2 = InputAsker.AskForNumericInput("Pleace select the Pet Type");
 
                             var type2 = _petService.getPetTypeInSortedList()[iType2];
 
-                            Console.WriteLine("Enter Birth Day:");
-                            int year2 = askForNumericInput("Enter Year:");
-                            int month2 = askForNumericInput("Enter Month:");
-                            int date2 = askForNumericInput("Enter Date:");
+                            DateTime birthDate = InputAsker.AskForDate("Enter Birth Day:");
 
-                            DateTime bDay = new DateTime(year2, month2, date2);
+                            String color2 = InputAsker.AskForTextInput("Enter Color:");
 
-                            String color2 = askForTextInput("Enter Color:");
+                            double price2 = InputAsker.AskForNumericInput("Enter Price:");
 
-                            double price2 = askForNumericInput("Enter Price:");
+                            Owner previousOwner2 = _ownerService.ReadOwner(InputAsker.AskForNumericInput("Enter id of owner"));
 
-                            string previousOwner2 = askForTextInput("Enter Name of previous Owner");
-
-                            Console.WriteLine("Enter Sold Date:");
-                            int sYear2 = askForNumericInput("Enter Year:");
-                            int sMonth2 = askForNumericInput("Enter Month:");
-                            int sDate2 = askForNumericInput("Enter Date:");
-                            DateTime soldDate = new DateTime(sYear2, sMonth2, sDate2);
+                            DateTime soldDate = InputAsker.AskForDate("Enter Sold Date:");
 
                             pet = new Pet
                             {
                                 Name = name,
                                 Type = type2,
-                                BirthDate = bDay,
+                                BirthDate = birthDate,
                                 Price = price2,
                                 PriviousOwner = previousOwner2,
                                 Color = color2,
                                 SoldDate = soldDate
-                                
+
                             };
                             break;
+
                         case 0:
-                            if (_petService.UpdatePet(pet) == null)
+                            try
                             {
+                                _petService.UpdatePet(pet);
                                 done = true;
+                                Console.Clear();
                                 Console.WriteLine("\n The Pet:\n" + pet + " \nWas succesfully Updated.");
-                                Console.WriteLine("--------------------------------------------------------");
-                                anyKeyInput("Press any Key to Continue.");
-                                break;
                             }
-                            else
+                            catch (Exception e)
                             {
-                                Console.WriteLine("Bobi de bob");
-                                Console.WriteLine("--------------------------------------------------------");
-                                anyKeyInput("Press any Key to Continue.");
-                                break;
+                                Console.WriteLine("\n"+ e.Message);
+                                Console.WriteLine("The Pet was not updated.");
+                                InputAsker.anyKeyInput("Press any key to return");
                             }
+                            break;
 
                         default:
                             break;
