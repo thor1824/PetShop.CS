@@ -11,11 +11,11 @@ using PetShopApp.Core.Entity;
 namespace PetShopApp.UI.WebApp.Controllers
 {
     [Route("api/[controller]")]
-    public class OwnerController : Controller
+    public class OwnersController : Controller
     {
         private readonly IOwnerService _ownerService;
 
-        public OwnerController(IOwnerService ownerService)
+        public OwnersController(IOwnerService ownerService)
         {
             this._ownerService = ownerService;
         }
@@ -23,34 +23,77 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<Owner> Get()
+        public ActionResult<IEnumerable<Owner>> Get()
         {
-            return _ownerService.ReadAllOwner();
+            try
+            {
+                return _ownerService.ReadAllOwner();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public Owner Get(int id)
+        public ActionResult<Owner> Get(int id)
         {
-            return _ownerService.ReadOwner(id);
+            try
+            {
+                return _ownerService.ReadOwner(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public ActionResult<Owner> Post([FromBody]Owner owner)
         {
+            try
+            {
+                return _ownerService.CreateOwner(owner);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public ActionResult<Owner> Put(int id, [FromBody]Owner owner)
         {
+            try
+            {
+                owner.Id = id;
+                return _ownerService.UpdateOwner(owner);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Owner> Delete(int id)
         {
+            try
+            {
+                return _ownerService.DeleteOwner(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
     }
 }
