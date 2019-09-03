@@ -62,7 +62,7 @@ namespace StartUp
 
             ////pet
             SortedList<int, IMenuItem> readPetOptions = new SortedList<int, IMenuItem>();
-            readPetOptions.Add(1, new LeafMenuItem("Show Pet", new ShowAllPetsinator(petService)));
+            readPetOptions.Add(1, new LeafMenuItem("Show Pet", new PetReadinator(petService)));
             readPetOptions.Add(2, new LeafMenuItem("Show All Pets", new ShowAllPetsinator(petService)));
             readPetOptions.Add(3, new LeafMenuItem("Show and Sort Pets by Type", new SeachPetByTypeinator(petService)));
             readPetOptions.Add(4, new LeafMenuItem("Show and Sort Pets by Price", new SortByPriceinator(petService)));

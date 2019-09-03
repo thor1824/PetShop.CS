@@ -45,7 +45,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                 Pet newPet = new Pet
                 {
                     Name = name,
-                    Type = type,
+                    PType = type,
                     BirthDate = bDay,
                     Price = price,
                     PriviousOwner = previousOwner,

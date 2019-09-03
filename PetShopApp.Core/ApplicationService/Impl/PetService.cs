@@ -83,7 +83,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
 
         public List<Pet> SeachByType(PetType.PType type)
         {
-            return _repo.ReadAll().Where((pet) => pet.Type.Equals(type)).ToList();
+            return _repo.ReadAll().Where((pet) => pet.PType.Equals(type)).ToList();
         }
 
         public SortedList<int, PetType.PType> getPetTypeInSortedList()

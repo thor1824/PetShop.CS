@@ -77,7 +77,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                                 Console.WriteLine("[" + item.Key + "] - " + item.Value.ToString());
                             }
                             int iType = InputAsker.AskForNumericInput("Pleace select the Pet Type");
-                            pet.Type = _petService.getPetTypeInSortedList()[iType];
+                            pet.PType = _petService.getPetTypeInSortedList()[iType];
                             break;
 
                         case 3:
@@ -137,7 +137,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                             pet = new Pet
                             {
                                 Name = name,
-                                Type = type2,
+                                PType = type2,
                                 BirthDate = birthDate,
                                 Price = price2,
                                 PriviousOwner = previousOwner2,
