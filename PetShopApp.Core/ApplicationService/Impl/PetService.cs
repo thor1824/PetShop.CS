@@ -128,23 +128,15 @@ namespace PetShopApp.Core.ApplicationService.Impl
 
         private bool CheckIfExist(int id)
         {
-            if (_repo.Read(id) == null)
+            
+            foreach (var item in _repo.ReadAll().ToList())
             {
-                return true;
+                if (item.Id.Equals(id))
+                {
+                    return true;
+                }
             }
             return false;
-            //bool exist = false;
-            //foreach (var item in _repo.ReadAll().ToList())
-            //{
-            //    if (item.Id.Equals(id))
-            //    {
-            //        exist = true;
-            //    }
-            //}
-            //if (!exist)
-            //{
-            //    throw new InvalidDataException("ID does not exsist");
-            //}
         }
 
         #endregion

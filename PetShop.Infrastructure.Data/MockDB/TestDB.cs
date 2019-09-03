@@ -15,12 +15,20 @@ namespace PetShop.Infrastructure.Data.MockDB
 
         public static IEnumerable<Pet> GetPetsInDB()
         {
+            if (pets == null)
+            {
+                InitDB();
+            }
             pets.OrderBy(p => p.Id);
             return pets;
         }
 
         public static IEnumerable<Owner> GetOwnersInDB()
         {
+            if (owners == null)
+            {
+                InitDB();
+            }
             owners.OrderBy(o => o.Id);
             return owners;
         }
