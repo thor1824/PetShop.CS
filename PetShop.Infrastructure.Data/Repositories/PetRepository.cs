@@ -31,9 +31,9 @@ namespace PetShop.Infrastructure.Data.Repositories
         {
             for (int i = 0; i < TestDB.GetPetsInDB().ToList().Count; i++)
             {
-                if (TestDB.GetPetsInDB().ToList()[i].Id.Equals(entity.Id))
+                if (TestDB.pets[i].Id.Equals(entity.Id))
                 {
-                    TestDB.GetPetsInDB().ToList()[i] = entity;
+                    TestDB.pets[i] = entity;
                     return entity;
                 }
             }

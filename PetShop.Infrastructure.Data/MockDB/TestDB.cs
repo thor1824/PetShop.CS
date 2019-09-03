@@ -19,8 +19,7 @@ namespace PetShop.Infrastructure.Data.MockDB
             {
                 InitDB();
             }
-            pets.OrderBy(p => p.Id);
-            return pets;
+            return pets.OrderBy(p => p.Id.Value);
         }
 
         public static IEnumerable<Owner> GetOwnersInDB()

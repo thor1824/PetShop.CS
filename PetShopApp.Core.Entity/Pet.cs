@@ -10,7 +10,7 @@ namespace PetShopApp.Core.Entity
     
     public class Pet
     {
-        private int? id;
+        private int? id = null;
         private string name;
         private PetType.PType? type;
         private DateTime? birthDate;
@@ -55,12 +55,12 @@ namespace PetShopApp.Core.Entity
         }
 
         public bool HasId { get { return id.HasValue; } }
-        public int Id { get => id.Value; set => id = value; }
+        public int? Id { get => id; set=> id = value;}
         public string Name { get => name; set => name = value; }
         public PetType.PType Type { get => type.Value; set => type = value; }
-        public DateTime BirthDate { get => birthDate.Value; set => birthDate = value; }
-        public DateTime SoldDate { get => soldDate.Value; set => soldDate = value; }
-        public double Price { get => price.Value; set => price = value; }
+        public DateTime? BirthDate { get => birthDate; set => birthDate = value; }
+        public DateTime? SoldDate { get => soldDate; set => soldDate = value; }
+        public double? Price { get => price; set => price = value; }
         public Owner PriviousOwner { get => priviousOwner; set => priviousOwner = value; }
         public string Color { get => color; set => color = value; }
 
