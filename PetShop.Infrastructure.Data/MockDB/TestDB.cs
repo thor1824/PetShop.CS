@@ -1,7 +1,10 @@
-﻿using PetShopApp.Core.Entity;
+﻿using Dapper;
+using PetShop.Infrastructure.Data.Sqlite;
+using PetShopApp.Core.Entity;
 using PetShopApp.Core.Entity.Enum;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -89,6 +92,45 @@ namespace PetShop.Infrastructure.Data.MockDB
             pets.Add(new Pet(6, "Jim Jimson", PetType.PType.Dog, new DateTime(2009, 6, 7), new DateTime(2017, 8, 12), "Transparant", null, 1000.00));
             pets.Add(new Pet(7, "Friedrich Wilhelm Viktor Albert", PetType.PType.Goat, new DateTime(1859, 1, 27), new DateTime(1941, 6, 9), "White", owner4, 2037000.00));
 
-        }    
+        }
+
+        public static void mitigateData()
+        {
+            IDbConnection conn = ConnectionCreater.CreateConnection();
+            conn.Open();
+            
+
+
+            //conn.Execute("INSERT INTO Pet(pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
+            //   "VALUES ()");
+            //cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
+            //SQLiteDataReader reader = cmd.ExecuteReader();
+            //while (reader.Read())
+            //{
+            //    Console.WriteLine(reader.GetString(0));
+            //}
+
+            foreach (var item in TestDB.GetPetsInDB())
+            {
+                conn.Execute("INSERT INTO Pet(pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
+               "VALUES (@Name, "+ (int)item.PType.Value + ")", item);
+                //    string query = "INSERT INTO Pet (pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
+                //    "VALUES ('" +
+                //    item.Name + "', " +
+                //    (int) item.PType.Value + ", '" +
+                //    item.BirthDate.ToString() + "', '" +
+                //    item.SoldDate.ToString()+"', " +
+                //    item.PriviousOwner.Id + ", '" +
+                //    item.Color + "', " +
+                //    item.Price + ")";
+                //    cmd.CommandText = query;
+                //    cmd.ExecuteNonQuery();
+            }
+            //foreach (var item in TestDB.owners)
+            //{
+            //    cmd.CommandText = "INSERT INTO Pet (owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
+            //        "VALUES ({0}, {1}, {2}, {3}, {4})";
+            //}
+        }
     }
 }

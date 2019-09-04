@@ -1,5 +1,6 @@
 ﻿using PetShop.Infrastructure.Data.MockDB;
 using PetShop.Infrastructure.Data.Repositories;
+using PetShop.Infrastructure.Data.Sqlite;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
@@ -10,6 +11,8 @@ using PetShopApp.UI.ConsoleView.Actionator.PetActionators;
 using PetShopApp.UI.ConsoleView.Menu;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 
 namespace StartUp
 {
@@ -17,14 +20,14 @@ namespace StartUp
     {
         static void Main(string[] args)
         {
-            //InitDB
+            ////InitDB
             TestDB.InitDB();
 
-            //Init Repositories
+            ////Init Repositories
             IRepository<Pet> petRepo = new PetRepository();
             IRepository<Owner> ownerRepo = new OwnerRepository();
 
-            //Init Services 
+            ////Init Services 
             IPetService petService = new PetService(petRepo);
             IOwnerService ownerService = new OwnerService(ownerRepo);
 
@@ -54,6 +57,11 @@ namespace StartUp
                 options);
             main.display();
             Console.Clear();
+            
+
+
+
+
         }
 
         private static SortedList<int, IMenuItem> GetReadOptions(IPetService petService, IOwnerService ownerService)
