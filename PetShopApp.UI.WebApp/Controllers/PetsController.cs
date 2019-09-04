@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.Entity;
+using PetShopApp.UI.WebApp.DTO;
 
 namespace PetShopApp.UI.WebApp.Controllers
 {
@@ -68,12 +69,21 @@ namespace PetShopApp.UI.WebApp.Controllers
         //}
 
         [HttpPost]
-        public ActionResult<Pet> Post([FromBody] Pet pet, [FromQuery]int ownerID)
+        public ActionResult<Pet> Post([FromBody] DTOCreatePetWithOwner pet)
         {
             try
             {
-                pet.PriviousOwner = _ownerService.ReadOwner(ownerID);
-                return _petService.CreatePet(pet);
+                return _petService.CreatePet(
+                    new Pet()
+                    {
+                        Name = pet.Name,
+                        PriviousOwner = _ownerService.ReadOwner(pet.PriviousOwnerID),
+                        BirthDate = pet.BirthDate,
+                        Color = pet.Color,
+                        Price = pet.Price,
+                        Type = pet.PType
+                        
+                    });
             }
             catch (Exception e)
             {
