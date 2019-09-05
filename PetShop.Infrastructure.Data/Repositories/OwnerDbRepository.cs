@@ -16,6 +16,7 @@ namespace PetShop.Infrastructure.Data.Repositories
         {
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
+                conn.Open();
                 conn.Execute("INSERT INTO Owner " +
                     "(owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
                "VALUES (@FirstName, @LastName, @Address, @Email, @PhoneNumber)", entity);
@@ -31,16 +32,18 @@ namespace PetShop.Infrastructure.Data.Repositories
             Owner owner = null;
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
-                IDataReader reader = conn.ExecuteReader("Select * FROM Owner WHERE owner_id = {0}", id);
+                conn.Open();
+                IDataReader reader = conn.ExecuteReader("Select * FROM Owner WHERE owner_id = " + id);
 
                 while (reader.Read())
                 {
-                    owner.Id = reader.GetInt64(1);
-                    owner.FirstName = reader.GetString(2);
-                    owner.LastName = reader.GetString(3);
-                    owner.Address = reader.GetString(4);
-                    owner.Email = reader.GetString(5);
-                    owner.PhoneNumber = reader.GetString(6);
+                    owner = new Owner();
+                    owner.Id = reader.GetInt64(0);
+                    owner.FirstName = reader.GetString(1);
+                    owner.LastName = reader.GetString(2);
+                    owner.Address = reader.GetString(3);
+                    owner.Email = reader.GetString(4);
+                    owner.PhoneNumber = reader.GetString(5);
                 }
                 conn.Close();
             }
@@ -52,16 +55,17 @@ namespace PetShop.Infrastructure.Data.Repositories
             List<Owner> owners = new List<Owner>();
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
+                conn.Open();
                 IDataReader reader = conn.ExecuteReader("Select * FROM Owner");
                 while (reader.Read())
                 {
                     Owner owner = new Owner();
-                    owner.Id = reader.GetInt64(1);
-                    owner.FirstName = reader.GetString(2);
-                    owner.LastName = reader.GetString(3);
-                    owner.Address = reader.GetString(4);
-                    owner.Email = reader.GetString(5);
-                    owner.PhoneNumber = reader.GetString(6);
+                    owner.Id = reader.GetInt64(0);
+                    owner.FirstName = reader.GetString(1);
+                    owner.LastName = reader.GetString(2);
+                    owner.Address = reader.GetString(3);
+                    owner.Email = reader.GetString(4);
+                    owner.PhoneNumber = reader.GetString(5);
                     owners.Add(owner);
                 }
                 conn.Close();
@@ -73,13 +77,14 @@ namespace PetShop.Infrastructure.Data.Repositories
         {
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
+                conn.Open();
                 conn.Execute("UPDATE Owner SET " +
                     "owner_first_name = @FirstName, " +
                     "owner_last_name = @LastName, " + 
                     "owner_address = @Address, " +
                     "owner_email = @Email, " +
-                    "owner_phone_no = @PhoneNumber" + 
-                    "WHERE pet_id = @Id", entity);
+                    "owner_phone_no = @PhoneNumber " + 
+                    "WHERE owner_id = @Id", entity);
                 conn.Close();
             }
             return entity;
@@ -89,6 +94,7 @@ namespace PetShop.Infrastructure.Data.Repositories
         {
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
+                conn.Open();
                 conn.Execute("DELETE FROM Owner WHERE owner_id = @Id", entity);
                 conn.Close();
             }

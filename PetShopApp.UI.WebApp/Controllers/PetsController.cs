@@ -53,37 +53,25 @@ namespace PetShopApp.UI.WebApp.Controllers
             
         }
 
-        // POST api/values
-        //[HttpPost]
-        //public ActionResult<Pet> Post([FromBody] Pet pet)
-        //{
-        //    try
-        //    {
-        //        return _petService.CreatePet(pet);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-            
-        //}
-
         [HttpPost]
-        public ActionResult<Pet> Post([FromBody] DTOCreatePetWithOwner pet)
+        public ActionResult<Pet> Post([FromBody] DTOCreatePet dto)
         {
             try
             {
-                return _petService.CreatePet(
-                    new Pet()
-                    {
-                        Name = pet.Name,
-                        PriviousOwner = _ownerService.ReadOwner(pet.PriviousOwnerID),
-                        BirthDate = pet.BirthDate,
-                        Color = pet.Color,
-                        Price = pet.Price,
-                        PType = pet.PType
-                        
-                    });
+                Pet newPet = new Pet()
+                {
+                    Name = dto.Name,
+                    BirthDate = dto.BirthDate,
+                    Color = dto.Color,
+                    Price = dto.Price,
+                    PType = dto.PType
+
+                };
+                if (dto.PriviousOwnerID != null)
+                {
+                    newPet.PriviousOwner = _ownerService.ReadOwner(dto.PriviousOwnerID.Value);
+                }
+                return _petService.CreatePet(newPet);
             }
             catch (Exception e)
             {
@@ -94,18 +82,46 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public ActionResult<Pet> Put(int id, [FromBody] Pet pet)
+        public ActionResult<Pet> Put(int id, [FromBody] DTOUpdatePet dto)
         {
             try
             {
+                Pet pet = _petService.ReadPetByID(id);
+                if (dto.Name != null)
+                {
+                    pet.Name = dto.Name; 
+                }
+                if (dto.PType != null)
+                {
+                    pet.PType = dto.PType;
+                }
+                if (dto.BirthDate != null)
+                {
+                    pet.BirthDate = dto.BirthDate;
+                }
+                if (dto.SoldDate != null)
+                {
+                    pet.SoldDate = dto.SoldDate; 
+                }
+                if (dto.Price != null)
+                {
+                    pet.Price = dto.Price;
+                }
+                if (dto.Color != null)
+                {
+                    pet.Color = dto.Color;
+                }
+                if (dto.PriviousOwnerID != null)
+                {
+                    pet.PriviousOwner = _ownerService.ReadOwner(dto.PriviousOwnerID.Value);// new Owner() { Id = pet.PriviousOwnerID };
+                }
+
                 return _petService.UpdatePet(pet);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            pet.Id = id;
-            
         }
 
 

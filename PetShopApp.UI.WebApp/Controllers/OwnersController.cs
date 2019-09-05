@@ -72,8 +72,28 @@ namespace PetShopApp.UI.WebApp.Controllers
         {
             try
             {
-                owner.Id = id;
-                return _ownerService.UpdateOwner(owner);
+                Owner oldOwner = _ownerService.ReadOwner(id);
+                if (owner.FirstName != null)
+                {
+                    oldOwner.FirstName = owner.FirstName;
+                }
+                if (owner.LastName != null)
+                {
+                    oldOwner.LastName = owner.LastName;
+                }
+                if (owner.Address != null)
+                {
+                    oldOwner.Address = owner.Address;
+                }
+                if (owner.Email != null)
+                {
+                    oldOwner.Email = owner.Email;
+                }
+                if (owner.PhoneNumber != null)
+                {
+                    oldOwner.PhoneNumber = owner.PhoneNumber;
+                }
+                return _ownerService.UpdateOwner(oldOwner);
             }
             catch (Exception e)
             {

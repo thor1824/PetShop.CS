@@ -10,7 +10,7 @@ namespace PetShopApp.UI.WebApp.Adaptor
     public class AdaptDTOToPetAndOwner
     {
 
-        public static Pet Convert(DTOCreatePetWithOwner dto)
+        public static Pet Convert(DTOCreatePet dto)
         {
             return null;
         }

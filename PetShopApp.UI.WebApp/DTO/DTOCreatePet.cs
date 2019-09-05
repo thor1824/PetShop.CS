@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace PetShopApp.UI.WebApp.DTO
 {
-    public class DTOCreatePetWithOwner
+    public class DTOCreatePet
     {
         public string Name { get; set; }
         public PetType.PType PType { get; set; }
         public DateTime? BirthDate { get; set; }
         public double? Price { get; set; }
-        public int PriviousOwnerID { get; set; }
+        public int? PriviousOwnerID { get; set; }
         public string Color { get; set; }
     }
 }
