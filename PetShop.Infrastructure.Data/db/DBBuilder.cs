@@ -4,6 +4,7 @@ using PetShop.Infrastructure.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Text;
 
@@ -44,40 +45,26 @@ namespace PetShop.Infrastructure.Data.db
             
         }
 
-        public static void buildData()
+        public static void BuildData()
         {
-            IDbConnection conn = ConnectionCreater.CreateConnection();
+            SQLiteConnection conn = ConnectionCreater.CreateConnection();
             conn.Open();
-            //conn.Execute("INSERT INTO Pet(pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
-            //   "VALUES ()");
-            //cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
-            //SQLiteDataReader reader = cmd.ExecuteReader();
-            //while (reader.Read())
-            //{
-            //    Console.WriteLine(reader.GetString(0));
-            //}
-
+            
+            conn.Execute("DELETE FROM Pet");
             foreach (var item in TestDB.GetPetsInDB())
             {
                 conn.Execute("INSERT INTO Pet(pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
-               "VALUES (@Name, " + (int)item.PType.Value + ")", item);
-                //    string query = "INSERT INTO Pet (pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
-                //    "VALUES ('" +
-                //    item.Name + "', " +
-                //    (int) item.PType.Value + ", '" +
-                //    item.BirthDate.ToString() + "', '" +
-                //    item.SoldDate.ToString()+"', " +
-                //    item.PriviousOwner.Id + ", '" +
-                //    item.Color + "', " +
-                //    item.Price + ")";
-                //    cmd.CommandText = query;
-                //    cmd.ExecuteNonQuery();
+               "VALUES (@Name, " + (int)item.PType.Value + ", @BirthDate, @SoldDate, " + (item.PriviousOwner == null ? "NULL" : ""+item.PriviousOwner.Id) + ", @Color, @Price)", item);
+                Console.WriteLine(conn.LastInsertRowId);
             }
-            //foreach (var item in TestDB.owners)
-            //{
-            //    cmd.CommandText = "INSERT INTO Owner (owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
-            //        "VALUES ({0}, {1}, {2}, {3}, {4})";
-            //}
+
+            conn.Execute("DELETE FROM Owner");
+            foreach (var item in TestDB.GetOwnersInDB())
+            {
+                conn.Execute("INSERT INTO Owner (owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
+                    "VALUES (@FirstName, @LastName, @Address, @Email, @PhoneNumber)", item);
+            }
+            conn.Close();
         }
     }
 }

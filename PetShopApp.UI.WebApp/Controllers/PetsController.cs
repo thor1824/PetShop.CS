@@ -81,7 +81,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                         BirthDate = pet.BirthDate,
                         Color = pet.Color,
                         Price = pet.Price,
-                        Type = pet.PType
+                        PType = pet.PType
                         
                     });
             }

@@ -5,16 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Sqlite\PetShopDB.db" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Sqlite\PetShopDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.4" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.111" />
   </ItemGroup>

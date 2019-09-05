@@ -8,7 +8,7 @@ namespace PetShopApp.Core.Entity
     {
         
 
-        public Owner(int id, string firstName, string lastName, string address, string phoneNumber, string email)
+        public Owner(long id, string firstName, string lastName, string address, string phoneNumber, string email)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -28,7 +28,7 @@ namespace PetShopApp.Core.Entity
         }
 
         public bool HasId { get { return Id.HasValue; } }
-        public int? Id { get; set; }
+        public long? Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }

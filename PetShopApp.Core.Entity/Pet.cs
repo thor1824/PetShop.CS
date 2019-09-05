@@ -17,7 +17,7 @@ namespace PetShopApp.Core.Entity
 
         }
 
-        public Pet(int id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, Owner priviousOwner, double price)
+        public Pet(long id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, Owner priviousOwner, double price)
         {
             this.Id = id;
             this.Name = name;
@@ -48,7 +48,7 @@ namespace PetShopApp.Core.Entity
         }
 
         public bool HasId { get { return Id.HasValue; } }
-        public int? Id { get; set;}
+        public long? Id { get; set;}
         public string Name { get; set; }
         public PetType.PType? PType { get; set; }
         public DateTime? BirthDate { get; set; }

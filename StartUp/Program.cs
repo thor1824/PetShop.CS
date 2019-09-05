@@ -9,6 +9,7 @@ using PetShopApp.Core.Entity;
 using PetShopApp.UI.ConsoleView.Actionator;
 using PetShopApp.UI.ConsoleView.Actionator.OwnerActionators;
 using PetShopApp.UI.ConsoleView.Actionator.PetActionators;
+using PetShopApp.UI.ConsoleView.essentials;
 using PetShopApp.UI.ConsoleView.Menu;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,6 @@ namespace StartUp
     {
         static void Main(string[] args)
         {
-            DBBuilder.BuildTabels();
             ////InitDB
             TestDB.InitDB();
 
