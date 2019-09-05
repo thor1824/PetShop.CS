@@ -11,7 +11,7 @@ using System.Text;
 
 namespace PetShop.Infrastructure.Data.Repositories
 {
-    class PetDbRepository : IRepository<Pet>
+    public class PetDbRepository : IRepository<Pet>
     {
         public Pet Create(Pet entity)
         {
@@ -31,26 +31,30 @@ namespace PetShop.Infrastructure.Data.Repositories
             Pet pet = null;
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
-                IDataReader reader = conn.ExecuteReader("Select * FROM Pet as p LEFT JOINE Owner as o ON p.pet_previous_owner_id = o.owner_id WHERE p.pet_id = {0}", id);
+                IDataReader reader = conn.ExecuteReader("Select * FROM Pet as p LEFT JOIN Owner as o ON p.pet_previous_owner_id = o.owner_id WHERE p.pet_id = " + id);
                 
                 while (reader.Read())
                 {
                     pet = new Pet();
-                    pet.Id = reader.GetInt64(1);
-                    pet.Name = reader.GetString(2);
-                    pet.PType = (PetType.PType)reader.GetInt32(3);
-                    pet.BirthDate = reader.GetDateTime(4);
-                    pet.SoldDate = reader.GetDateTime(5);
-                    pet.Color = reader.GetString(7);
-                    pet.Price = reader.GetDouble(8);
-                    if (reader[9].GetType() != typeof(DBNull))
+                    pet.Id = reader.GetInt64(0);
+                    pet.Name = reader.GetString(1);
+                    pet.PType = (PetType.PType)Enum.ToObject(typeof(PetType.PType), reader.GetInt32(2));
+                    pet.BirthDate = reader.GetDateTime(3);
+                    pet.SoldDate = reader.GetDateTime(4);
+                    pet.Color = reader.GetString(6);
+                    pet.Price = reader.GetDouble(7);
+                    if (reader[5].GetType() != typeof(DBNull))
                     {
-                        pet.PriviousOwner.Id = reader.GetInt64(9);
-                        pet.PriviousOwner.FirstName = reader.GetString(10);
-                        pet.PriviousOwner.LastName = reader.GetString(11);
-                        pet.PriviousOwner.Address = reader.GetString(12);
-                        pet.PriviousOwner.Email = reader.GetString(13);
-                        pet.PriviousOwner.PhoneNumber = reader.GetString(14);
+                        pet.PriviousOwner = new Owner()
+                        {
+                            Id = reader.GetInt64(8),
+                            FirstName = reader.GetString(9),
+                            LastName = reader.GetString(10),
+                            Address = reader.GetString(11),
+                            Email = reader.GetString(12),
+                            PhoneNumber = reader.GetString(13),
+
+                        };
                     }
                 }
                 conn.Close();
@@ -62,25 +66,30 @@ namespace PetShop.Infrastructure.Data.Repositories
             List<Pet> pets = new List<Pet>();
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())
             {
-                IDataReader reader = conn.ExecuteReader("Select * FROM Pet as p LEFT JOINE Owner as o on p.pet_previous_owner_id = o.owner_id");
+                IDataReader reader = conn.ExecuteReader("Select * FROM Pet as p LEFT JOIN Owner as o ON p.pet_previous_owner_id = o.owner_id");
                 while (reader.Read())
                 {
                     Pet pet = new Pet();
-                    pet.Id = reader.GetInt64(1);
-                    pet.Name = reader.GetString(2);
-                    pet.PType = (PetType.PType)reader.GetInt32(3);
-                    pet.BirthDate = reader.GetDateTime(4);
-                    pet.SoldDate = reader.GetDateTime(5);
-                    pet.Color = reader.GetString(7);
-                    pet.Price = reader.GetDouble(8);
-                    if (reader[9].GetType() != typeof(DBNull))
+                    pet.Id = reader.GetInt64(0);
+                    pet.Name = reader.GetString(1);
+                    pet.PType = (PetType.PType) Enum.ToObject(typeof(PetType.PType), reader.GetInt32(2));
+                    pet.BirthDate = reader.GetDateTime(3);
+                    pet.SoldDate = reader.GetDateTime(4);
+                    pet.Color = reader.GetString(6);
+                    pet.Price = reader.GetDouble(7);
+                    if (reader[5].GetType() != typeof(DBNull))
                     {
-                        pet.PriviousOwner.Id = reader.GetInt64(9);
-                        pet.PriviousOwner.FirstName = reader.GetString(10);
-                        pet.PriviousOwner.LastName = reader.GetString(11);
-                        pet.PriviousOwner.Address = reader.GetString(12);
-                        pet.PriviousOwner.Email = reader.GetString(13);
-                        pet.PriviousOwner.PhoneNumber = reader.GetString(14);
+                        pet.PriviousOwner = new Owner()
+                        {
+                            Id = reader.GetInt64(8),
+                            FirstName = reader.GetString(9),
+                            LastName = reader.GetString(10),
+                            Address = reader.GetString(11),
+                            Email = reader.GetString(12),
+                            PhoneNumber = reader.GetString(13),
+
+                        };
+
                     }
                     pets.Add(pet);
                 }

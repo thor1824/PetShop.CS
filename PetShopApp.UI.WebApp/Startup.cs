@@ -31,8 +31,8 @@ namespace PetShopApp.UI.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddScoped<IRepository<Pet>, PetRepository>();
-            services.AddScoped<IRepository<Owner>, OwnerRepository>();
+            services.AddScoped<IRepository<Pet>, PetDbRepository>();
+            services.AddScoped<IRepository<Owner>, OwnerDbRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerService, OwnerService>();
         }

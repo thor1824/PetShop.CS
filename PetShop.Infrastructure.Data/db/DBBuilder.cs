@@ -30,7 +30,7 @@ namespace PetShop.Infrastructure.Data.db
                 );
 
             conn.Execute("CREATE TABLE Pet (" +
-                "PetID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +
+                "pet_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +
                 "pet_name  TEXT NOT NULL," +
                 "pet_type  INTEGER NOT NULL," +
                 "pet_birthdate TEXT NOT NULL, " +

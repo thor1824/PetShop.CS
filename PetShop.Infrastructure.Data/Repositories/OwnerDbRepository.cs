@@ -10,7 +10,7 @@ using System.Text;
 
 namespace PetShop.Infrastructure.Data.Repositories
 {
-    class OwnerDbRepository : IRepository<Owner>
+    public class OwnerDbRepository : IRepository<Owner>
     {
         public Owner Create(Owner entity)
         {
