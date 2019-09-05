@@ -21,7 +21,7 @@ namespace StartUp
     {
         static void Main(string[] args)
         {
-            DBBuilder.build();
+            DBBuilder.BuildTabels();
             ////InitDB
             TestDB.InitDB();
 

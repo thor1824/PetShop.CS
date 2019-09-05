@@ -14,7 +14,7 @@ namespace PetShop.Infrastructure.Data.db
        
         
 
-        public static void build()
+        public static void BuildTabels()
         {
             IDbConnection conn = ConnectionCreater.CreateConnection();
             conn.Open();
@@ -37,8 +37,17 @@ namespace PetShop.Infrastructure.Data.db
                 "pet_previous_owner_id INTEGER, " +
                 "pet_color TEXT NOT NULL, " +
                 "pet_price REAL NOT NULL, " +
-    "FOREIGN KEY(pet_previous_owner_id) REFERENCES Owner(owner_id))"
-    );
+                "FOREIGN KEY(pet_previous_owner_id) REFERENCES Owner(owner_id))"
+                );
+
+            conn.Close();
+            
+        }
+
+        public static void buildData()
+        {
+            IDbConnection conn = ConnectionCreater.CreateConnection();
+            conn.Open();
             //conn.Execute("INSERT INTO Pet(pet_name, pet_type, pet_birthdate, pet_sold_date, pet_previous_owner_id, pet_color, pet_price) " +
             //   "VALUES ()");
             //cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table'";
@@ -66,7 +75,7 @@ namespace PetShop.Infrastructure.Data.db
             }
             //foreach (var item in TestDB.owners)
             //{
-            //    cmd.CommandText = "INSERT INTO Pet (owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
+            //    cmd.CommandText = "INSERT INTO Owner (owner_first_name, owner_last_name, owner_address, owner_email, owner_phone_no) " +
             //        "VALUES ({0}, {1}, {2}, {3}, {4})";
             //}
         }
