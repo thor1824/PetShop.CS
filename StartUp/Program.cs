@@ -1,4 +1,5 @@
-﻿using PetShop.Infrastructure.Data.MockDB;
+﻿using PetShop.Infrastructure.Data.db;
+using PetShop.Infrastructure.Data.MockDB;
 using PetShop.Infrastructure.Data.Repositories;
 using PetShop.Infrastructure.Data.Sqlite;
 using PetShopApp.Core.ApplicationService;
@@ -20,6 +21,7 @@ namespace StartUp
     {
         static void Main(string[] args)
         {
+            DBBuilder.build();
             ////InitDB
             TestDB.InitDB();
 
