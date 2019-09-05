@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="db\Builder\**" />
+    <EmbeddedResource Remove="db\Builder\**" />
+    <None Remove="db\Builder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="db\DBBuilder.cs" />
   </ItemGroup>
 
