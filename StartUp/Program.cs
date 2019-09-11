@@ -1,7 +1,6 @@
 ﻿using PetShop.Infrastructure.Data.db;
 using PetShop.Infrastructure.Data.MockDB;
 using PetShop.Infrastructure.Data.Repositories;
-using PetShop.Infrastructure.Data.Sqlite;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
