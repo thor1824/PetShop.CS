@@ -32,7 +32,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
            
         }
 
-        public Owner Read(int id)
+        public Owner Read(long id)
         {
             return _ctx.Owners.FirstOrDefault(o => o.Id == id);
         }
@@ -52,7 +52,8 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
                 result.Address = entity.Address;
                 result.Email = entity.Email;
                 result.PhoneNumber = entity.PhoneNumber;
-                return _ctx.SaveChanges() == 1 ? null : result;
+                _ctx.SaveChanges();
+                return result;
             }
             else
             {

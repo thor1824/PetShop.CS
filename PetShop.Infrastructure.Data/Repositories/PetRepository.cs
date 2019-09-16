@@ -27,7 +27,7 @@ namespace PetShopApp.Infrastructure.SQLite.Repositories
             }
             return entity;
         }
-        public Pet Read(int id)
+        public Pet Read(long id)
         {
             Pet pet = null;
             using (SQLiteConnection conn = ConnectionCreater.CreateConnection())

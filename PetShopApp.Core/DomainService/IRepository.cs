@@ -8,7 +8,7 @@ namespace PetShopApp.Core.DomainService
     {
         T Create(T entity);
 
-        T Read(int id);
+        T Read(long id);
 
         IEnumerable<T> ReadAll();
 

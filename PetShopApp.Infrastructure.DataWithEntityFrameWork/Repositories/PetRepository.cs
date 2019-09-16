@@ -1,4 +1,5 @@
-﻿using PetShop.Infrastructure.DataWithEntity;
+﻿using Microsoft.EntityFrameworkCore;
+using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
 using System;
@@ -24,22 +25,39 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 
         public Pet Delete(Pet entity)
         {
-            throw new NotImplementedException();
+            _ctx.Pets.Remove(entity).State = EntityState.Deleted;
+            return _ctx.SaveChanges() == 1 ? null : entity;
         }
 
-        public Pet Read(int id)
+        public Pet Read(long id)
         {
-            return _ctx.Pets.FirstOrDefault(p => p.Id == id);
+            return _ctx.Pets.Include(pet => pet.PriviousOwner).FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Pet> ReadAll()
         {
-            return _ctx.Pets;
+            return _ctx.Pets.Include(pet => pet.PriviousOwner).ToList();
         }
 
         public Pet Update(Pet entity)
         {
-            throw new NotImplementedException();
+            var result = Read(entity.Id.Value);
+            if (result != null)
+            {
+                result.Name = entity.Name;
+                result.PType = entity.PType;
+                result.BirthDate = entity.BirthDate;
+                result.SoldDate = entity.SoldDate;
+                result.Color = entity.Color;
+                result.PriviousOwner = entity.PriviousOwner;
+                result.Price = entity.Price;
+                _ctx.SaveChanges();
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
