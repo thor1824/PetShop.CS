@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>PetShopApp.Infrastructure.SQLite</AssemblyName>
+    <RootNamespace>PetShopApp.Infrastructure.SQLite</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,12 +18,18 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.4" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.111" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.111" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PetShopApp.Core.Entity\PetShopApp.Core.Entity.csproj" />
     <ProjectReference Include="..\PetShopApp.Core\PetShopApp.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="db\ParaBellumDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 ﻿using PetShop.Infrastructure.Data.db;
-using PetShop.Infrastructure.Data.MockDB;
 using PetShop.Infrastructure.Data.Repositories;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
@@ -21,8 +20,6 @@ namespace StartUp
     {
         static void Main(string[] args)
         {
-            ////InitDB
-            TestDB.InitDB();
 
             ////Init Repositories
             IRepository<Pet> petRepo = new PetRepository();
