@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Text;
 
-namespace PetShop.Infrastructure.Data.Repositories
+namespace PetShopApp.Infrastructure.SQLite.Repositories
 {
     public class OwnerRepository : IRepository<Owner>
     {
@@ -80,10 +80,10 @@ namespace PetShop.Infrastructure.Data.Repositories
                 conn.Open();
                 conn.Execute("UPDATE Owner SET " +
                     "owner_first_name = @FirstName, " +
-                    "owner_last_name = @LastName, " + 
+                    "owner_last_name = @LastName, " +
                     "owner_address = @Address, " +
                     "owner_email = @Email, " +
-                    "owner_phone_no = @PhoneNumber " + 
+                    "owner_phone_no = @PhoneNumber " +
                     "WHERE owner_id = @Id", entity);
                 conn.Close();
             }

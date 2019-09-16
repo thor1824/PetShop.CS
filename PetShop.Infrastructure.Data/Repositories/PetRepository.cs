@@ -9,7 +9,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Text;
 
-namespace PetShop.Infrastructure.Data.Repositories
+namespace PetShopApp.Infrastructure.SQLite.Repositories
 {
     public class PetRepository : IRepository<Pet>
     {
@@ -34,7 +34,7 @@ namespace PetShop.Infrastructure.Data.Repositories
             {
                 conn.Open();
                 IDataReader reader = conn.ExecuteReader("Select * FROM Pet as p LEFT JOIN Owner as o ON p.pet_previous_owner_id = o.owner_id WHERE p.pet_id = " + id);
-                
+
                 while (reader.Read())
                 {
                     pet = new Pet();
@@ -79,7 +79,7 @@ namespace PetShop.Infrastructure.Data.Repositories
                     Pet pet = new Pet();
                     pet.Id = reader.GetInt64(0);
                     pet.Name = reader.GetString(1);
-                    pet.PType = (PetType.PType) Enum.ToObject(typeof(PetType.PType), reader.GetInt32(2));
+                    pet.PType = (PetType.PType)Enum.ToObject(typeof(PetType.PType), reader.GetInt32(2));
                     pet.BirthDate = reader.GetDateTime(3);
                     if (reader[4].GetType() != typeof(DBNull))
                     {
@@ -113,7 +113,7 @@ namespace PetShop.Infrastructure.Data.Repositories
             {
                 conn.Open();
                 conn.Execute("UPDATE Pet " +
-                    "SET pet_name = @Name, pet_type = "+ (int)entity.PType.Value +" , pet_birthdate = @BirthDate, pet_sold_date = @SoldDate, " +
+                    "SET pet_name = @Name, pet_type = " + (int)entity.PType.Value + " , pet_birthdate = @BirthDate, pet_sold_date = @SoldDate, " +
                     "pet_previous_owner_id = " + (entity.PriviousOwner == null ? "NULL" : "" + entity.PriviousOwner.Id) + ", pet_color = @Color, " +
                     "pet_price = @Price WHERE pet_id = @Id", entity);
 

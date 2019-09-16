@@ -9,7 +9,7 @@ using PetShopApp.Core.Entity;
 
 namespace PetShop.Infrastructure.DataWithEntity
 {
-    class PetShopAppContext : DbContext
+    public class PetShopAppContext : DbContext
     {
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owners { get; set; }

@@ -1,9 +1,9 @@
 ﻿using PetShop.Infrastructure.Data.db;
-using PetShop.Infrastructure.Data.Repositories;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
+using PetShopApp.Infrastructure.SQLite.Repositories;
 using PetShopApp.UI.ConsoleView.Actionator;
 using PetShopApp.UI.ConsoleView.Actionator.OwnerActionators;
 using PetShopApp.UI.ConsoleView.Actionator.PetActionators;

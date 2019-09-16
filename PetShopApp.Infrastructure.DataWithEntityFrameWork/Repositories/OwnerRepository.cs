@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 {
-    class OwnerRepository : IRepository<Owner>
+    public class OwnerRepository : IRepository<Owner>
     {
         private readonly PetShopAppContext _ctx;
 
