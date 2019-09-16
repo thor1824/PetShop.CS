@@ -1,4 +1,5 @@
-﻿using PetShop.Infrastructure.DataWithEntity;
+﻿using Microsoft.EntityFrameworkCore;
+using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
 using System;
@@ -19,12 +20,16 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 
         public Owner Create(Owner entity)
         {
-            return _ctx.Owners.Add(entity).Entity;
+            _ctx.Owners.Attach(entity).State = EntityState.Added;
+
+            return _ctx.SaveChanges() == 1 ? null : entity;
         }
 
         public Owner Delete(Owner entity)
         {
-            throw new NotImplementedException();
+            _ctx.Owners.Remove(entity).State = EntityState.Deleted;
+            return _ctx.SaveChanges() == 1 ? null : entity;
+           
         }
 
         public Owner Read(int id)
@@ -39,7 +44,20 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 
         public Owner Update(Owner entity)
         {
-            throw new NotImplementedException();
+            var result = _ctx.Owners.SingleOrDefault(o => o.Id == entity.Id);
+            if (result != null)
+            {
+                result.FirstName = entity.FirstName;
+                result.LastName = entity.LastName;
+                result.Address = entity.Address;
+                result.Email = entity.Email;
+                result.PhoneNumber = entity.PhoneNumber;
+                return _ctx.SaveChanges() == 1 ? null : result;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
