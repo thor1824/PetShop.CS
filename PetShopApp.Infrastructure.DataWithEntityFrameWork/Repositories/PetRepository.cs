@@ -56,7 +56,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
                 result.BirthDate = entity.BirthDate;
                 result.SoldDate = entity.SoldDate;
                 result.Color = entity.Color;
-                //result.PriviousOwner = entity.PriviousOwner;
+                result.PreviousOwners = entity.PreviousOwners;
                 result.Price = entity.Price;
                 _ctx.SaveChanges();
                 return result;

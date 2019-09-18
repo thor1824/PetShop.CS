@@ -58,6 +58,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
                 result.Address = entity.Address;
                 result.Email = entity.Email;
                 result.PhoneNumber = entity.PhoneNumber;
+                result.PreviousOwnedPets = entity.PreviousOwnedPets;
                 _ctx.SaveChanges();
                 return result;
             }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.Entity;
+using PetShopApp.UI.WebApp.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +15,12 @@ namespace PetShopApp.UI.WebApp.Controllers
     public class OwnersController : Controller
     {
         private readonly IOwnerService _ownerService;
+        private readonly IPetService _petService;
 
-        public OwnersController(IOwnerService ownerService)
+        public OwnersController(IOwnerService ownerService, IPetService petService)
         {
             this._ownerService = ownerService;
+            this._petService = petService;
         }
 
 
@@ -53,11 +56,33 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult<Owner> Post([FromBody]Owner owner)
+        public ActionResult<Owner> Post([FromBody]DTOOwner owner)
         {
             try
             {
-                return _ownerService.CreateOwner(owner);
+                Owner newOwner = new Owner {
+                    FirstName = owner.FirstName,
+                    LastName = owner.LastName,
+                    Address = owner.Address,
+                    Email = owner.Email,
+                    PhoneNumber = owner.PhoneNumber
+                };
+                if (owner.PreviousOwnedPets != null)
+                {
+                    List<PetOwner> petList = new List<PetOwner>();
+                    for (int i = 0; i < owner.PreviousOwnedPets.Length; i++)
+                    {
+                        petList.Add(new PetOwner()
+                        {
+                            PetID = owner.PreviousOwnedPets[i],
+                            Pet = _petService.ReadPetByID(owner.PreviousOwnedPets[i]),
+                            Owner = newOwner
+                        });
+
+                    }
+                    newOwner.PreviousOwnedPets = petList;
+                }
+                return _ownerService.CreateOwner(newOwner);
             }
             catch (Exception e)
             {
@@ -68,7 +93,7 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public ActionResult<Owner> Put(int id, [FromBody]Owner owner)
+        public ActionResult<Owner> Put(int id, [FromBody]DTOOwner owner)
         {
             try
             {
@@ -92,6 +117,22 @@ namespace PetShopApp.UI.WebApp.Controllers
                 if (owner.PhoneNumber != null)
                 {
                     oldOwner.PhoneNumber = owner.PhoneNumber;
+                }
+                if (owner.PreviousOwnedPets != null)
+                {
+                    List<PetOwner> petList = new List<PetOwner>();
+                    for (int i = 0; i < owner.PreviousOwnedPets.Length; i++)
+                    {
+                        petList.Add(new PetOwner()
+                        {
+                            PetID = owner.PreviousOwnedPets[i],
+                            Pet = _petService.ReadPetByID(owner.PreviousOwnedPets[i]),
+                            Owner = oldOwner,
+                            OwnerID = oldOwner.Id.Value
+                        });
+
+                    }
+                    oldOwner.PreviousOwnedPets = petList;
                 }
                 return _ownerService.UpdateOwner(oldOwner);
             }
