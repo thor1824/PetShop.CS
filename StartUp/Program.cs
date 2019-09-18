@@ -1,9 +1,9 @@
-﻿using PetShop.Infrastructure.Data.db;
+﻿//using PetShop.Infrastructure.Data.db;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
-using PetShopApp.Infrastructure.SQLite.Repositories;
+//using PetShopApp.Infrastructure.SQLite.Repositories;
 using PetShopApp.UI.ConsoleView.Actionator;
 using PetShopApp.UI.ConsoleView.Actionator.OwnerActionators;
 using PetShopApp.UI.ConsoleView.Actionator.PetActionators;
@@ -22,8 +22,8 @@ namespace StartUp
         {
 
             ////Init Repositories
-            IRepository<Pet> petRepo = new PetRepository();
-            IRepository<Owner> ownerRepo = new OwnerRepository();
+            //IRepository<Pet> petRepo = new PetRepository();
+            //IRepository<Owner> ownerRepo = new OwnerRepository();
 
             ////Init Services 
             IPetService petService = new PetService(petRepo);

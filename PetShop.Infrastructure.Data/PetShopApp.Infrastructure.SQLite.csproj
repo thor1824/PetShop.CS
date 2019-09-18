@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="db\Builder\**" />
-    <EmbeddedResource Remove="db\Builder\**" />
-    <None Remove="db\Builder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="db\DBBuilder.cs" />
+    <Compile Remove="db\**" />
+    <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="db\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="db\**" />
+    <None Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,12 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PetShopApp.Core.Entity\PetShopApp.Core.Entity.csproj" />
     <ProjectReference Include="..\PetShopApp.Core\PetShopApp.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="db\ParaBellumDB.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

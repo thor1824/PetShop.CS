@@ -11,6 +11,7 @@ namespace PetShopApp.UI.WebApp
     {
         public static void Seed(PetShopAppContext ctx)
         {
+            ctx.Database.EnsureDeleted();
             if (ctx.Database.EnsureCreated())
             {
                 Owner own1 = ctx.Owners.Add(new Owner()
@@ -44,9 +45,12 @@ namespace PetShopApp.UI.WebApp
                     PType = Core.Entity.Enum.PetType.PType.Cat,
                     BirthDate = new DateTime(1999, 1, 1),
                     SoldDate = new DateTime(2000, 1, 1),
-                    PriviousOwner = own1,
                     Color = "Brown",
-                    Price = 10.0
+                    Price = 10.0,
+                    PreviousOwners = new List<PetOwner>
+                    {
+                        new PetOwner{ Owner = own1}, new PetOwner{ Owner = own2}, new PetOwner{ Owner = own3}
+                    }
                 });
                 ctx.Pets.Add(new Pet()
                 {
@@ -54,9 +58,12 @@ namespace PetShopApp.UI.WebApp
                     PType = Core.Entity.Enum.PetType.PType.Dog,
                     BirthDate = new DateTime(2001, 1, 1),
                     SoldDate = new DateTime(2002, 1, 1),
-                    PriviousOwner = own2,
                     Color = "Black",
-                    Price = 1000.0
+                    Price = 1000.0,
+                    PreviousOwners = new List<PetOwner>
+                    {
+                        new PetOwner{ Owner = own2}, new PetOwner{ Owner = own3}
+                    }
                 });
                 ctx.Pets.Add(new Pet()
                 {
@@ -64,7 +71,6 @@ namespace PetShopApp.UI.WebApp
                     PType = Core.Entity.Enum.PetType.PType.Goat,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
-                    PriviousOwner = own3,
                     Color = "Yellow",
                     Price = 10.0
                 });

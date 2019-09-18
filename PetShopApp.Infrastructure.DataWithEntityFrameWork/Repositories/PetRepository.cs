@@ -26,17 +26,24 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
         public Pet Delete(Pet entity)
         {
             _ctx.Pets.Remove(entity).State = EntityState.Deleted;
-            return _ctx.SaveChanges() == 1 ? null : entity;
+            _ctx.SaveChanges();
+            return entity;
         }
 
         public Pet Read(long id)
         {
-            return _ctx.Pets.Include(pet => pet.PriviousOwner).FirstOrDefault(p => p.Id == id);
+            return _ctx.Pets
+                .Include(pet => pet.PreviousOwners)
+                .ThenInclude(e => e.Owner)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Pet> ReadAll()
         {
-            return _ctx.Pets.Include(pet => pet.PriviousOwner).ToList();
+            return _ctx.Pets
+                .Include(pet => pet.PreviousOwners)
+                .ThenInclude(p => p.Owner)
+                .ToList();
         }
 
         public Pet Update(Pet entity)
@@ -49,7 +56,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
                 result.BirthDate = entity.BirthDate;
                 result.SoldDate = entity.SoldDate;
                 result.Color = entity.Color;
-                result.PriviousOwner = entity.PriviousOwner;
+                //result.PriviousOwner = entity.PriviousOwner;
                 result.Price = entity.Price;
                 _ctx.SaveChanges();
                 return result;

@@ -21,25 +21,31 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
         public Owner Create(Owner entity)
         {
             _ctx.Owners.Attach(entity).State = EntityState.Added;
-
-            return _ctx.SaveChanges() == 1 ? null : entity;
+            _ctx.SaveChanges();
+            return entity;
         }
 
         public Owner Delete(Owner entity)
         {
             _ctx.Owners.Remove(entity).State = EntityState.Deleted;
-            return _ctx.SaveChanges() == 1 ? null : entity;
-           
+            _ctx.SaveChanges();
+            return entity;
         }
 
         public Owner Read(long id)
         {
-            return _ctx.Owners.FirstOrDefault(o => o.Id == id);
+            return _ctx.Owners
+                .Include(o => o.PreviousOwnedPets)
+                .ThenInclude(po => po.Pet)
+                .FirstOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<Owner> ReadAll()
         {
-            return _ctx.Owners;
+            return _ctx.Owners
+                .Include(o => o.PreviousOwnedPets)
+                .ThenInclude(po => po.Pet)
+                .ToList(); 
         }
 
         public Owner Update(Owner entity)

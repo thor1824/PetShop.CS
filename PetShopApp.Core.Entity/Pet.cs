@@ -17,7 +17,7 @@ namespace PetShopApp.Core.Entity
 
         }
 
-        public Pet(long id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, Owner priviousOwner, double price)
+        public Pet(long id, string name, PetType.PType type, DateTime birthDate, DateTime soldDate, string color, /*Owner priviousOwner,*/ double price)
         {
             this.Id = id;
             this.Name = name;
@@ -25,7 +25,7 @@ namespace PetShopApp.Core.Entity
             this.BirthDate = birthDate;
             this.SoldDate = soldDate;
             this.Color = color;
-            this.PriviousOwner = priviousOwner;
+            //this.PriviousOwner = priviousOwner;
             this.Price = price;
             
         }
@@ -42,7 +42,7 @@ namespace PetShopApp.Core.Entity
                 ", Type: " + (PType == null ? "N/A": PType.ToString()) + 
                 ", Color: " + Color + 
                 ", Price: " + (Price == null ? "N/A" : Price.ToString()) + 
-                ", Privious Owner: " + (PriviousOwner == null ? "N/A" : PriviousOwner.FirstName + " " + PriviousOwner.LastName) + 
+                //", Privious Owner: " + (PriviousOwner == null ? "N/A" : PriviousOwner.FirstName + " " + PriviousOwner.LastName) + 
                 ", Birthday: " + (BirthDate.Value == null ? "N/A" : getFormatteDate(BirthDate.Value)) + 
                 ", Date of Sale: " + (SoldDate == null ? "N/A" : getFormatteDate(SoldDate.Value)) + "]";
         }
@@ -54,8 +54,9 @@ namespace PetShopApp.Core.Entity
         public DateTime? BirthDate { get; set; }
         public DateTime? SoldDate { get; set; }
         public double? Price { get; set; }
-        public Owner PriviousOwner { get; set; }
+        //public Owner PriviousOwner { get; set; }
         public string Color { get; set; }
+        public ICollection<PetOwner> PreviousOwners { get; set; }
 
     }
 }

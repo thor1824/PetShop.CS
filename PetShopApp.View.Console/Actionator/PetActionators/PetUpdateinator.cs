@@ -101,7 +101,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                         case 6:
                             Console.Clear();
 
-                            pet.PriviousOwner = _ownerService.ReadOwner(InputAsker.AskForNumericInput("Enter id of owner"));
+                            //pet.PriviousOwner = _ownerService.ReadOwner(InputAsker.AskForNumericInput("Enter id of owner"));
                             break;
 
                         case 7:
@@ -140,7 +140,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                                 PType = type2,
                                 BirthDate = birthDate,
                                 Price = price2,
-                                PriviousOwner = previousOwner2,
+                                //PriviousOwner = previousOwner2,
                                 Color = color2,
                                 SoldDate = soldDate
 

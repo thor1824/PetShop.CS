@@ -16,6 +16,24 @@ namespace PetShop.Infrastructure.DataWithEntity
 
         public PetShopAppContext(DbContextOptions<PetShopAppContext> opt) : base(opt) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<PetOwner>()
+                .HasKey(po => new { po.PetID, po.OwnerID });
+            modelBuilder.Entity<PetOwner>()
+                .HasOne(po => po.Pet)
+                .WithMany(p => p.PreviousOwners)
+                .HasForeignKey(bc => bc.PetID);
+            
+            modelBuilder.Entity<PetOwner>()
+                .HasOne(po => po.Owner)
+                .WithMany(o => o.PreviousOwnedPets)
+                .HasForeignKey(po => po.OwnerID);
+
+        }
+
 
     }
 }

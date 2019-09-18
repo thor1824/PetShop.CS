@@ -43,6 +43,9 @@ namespace PetShopApp.UI.WebApp
                 services.AddDbContext<PetShopAppContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             }
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddScoped<IRepository<Pet>, PetRepository>();
             services.AddScoped<IRepository<Owner>, OwnerRepository>();
             services.AddScoped<IPetService, PetService>();
@@ -67,10 +70,10 @@ namespace PetShopApp.UI.WebApp
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    
                     var ctx = scope.ServiceProvider.GetService<PetShopAppContext>();
                     DbSeeder.Seed(ctx);
                 }
+
                 app.UseHsts();
             }
 

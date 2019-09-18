@@ -48,7 +48,7 @@ namespace PetShopApp.UI.ConsoleView.Actionator.PetActionators
                     PType = type,
                     BirthDate = bDay,
                     Price = price,
-                    PriviousOwner = previousOwner,
+                    //PriviousOwner = previousOwner,
                     Color = color
                 };
                 Console.WriteLine("\nPet:" + _petService.CreatePet(newPet) + " was Created");

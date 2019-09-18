@@ -12,7 +12,7 @@ namespace PetShopApp.UI.WebApp.DTO
         public PetType.PType PType { get; set; }
         public DateTime? BirthDate { get; set; }
         public double? Price { get; set; }
-        public int? PriviousOwnerID { get; set; }
+        public int[] PriviousOwners { get; set; }
         public string Color { get; set; }
     }
 }

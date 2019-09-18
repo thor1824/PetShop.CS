@@ -67,9 +67,23 @@ namespace PetShopApp.UI.WebApp.Controllers
                     PType = dto.PType
 
                 };
-                if (dto.PriviousOwnerID != null)
+                if (dto.PriviousOwners != null)
                 {
-                    newPet.PriviousOwner = _ownerService.ReadOwner(dto.PriviousOwnerID.Value);
+                    List<PetOwner> List = new List<PetOwner>();
+                    for (int i = 0; i < dto.PriviousOwners.Length; i++)
+                    {
+                        PetOwner temp = new PetOwner()
+                        {
+                            Pet = newPet,
+                            PetID = newPet.Id.Value,
+                            Owner = _ownerService.ReadOwner(dto.PriviousOwners[i]),
+                            OwnerID = dto.PriviousOwners[i]
+                        };
+
+                        List.Add(temp);
+                    }
+                    newPet.PreviousOwners = List;
+
                 }
                 return _petService.CreatePet(newPet);
             }
@@ -111,9 +125,21 @@ namespace PetShopApp.UI.WebApp.Controllers
                 {
                     pet.Color = dto.Color;
                 }
-                if (dto.PriviousOwnerID != null)
+                if (dto.PriviousOwners != null)
                 {
-                    pet.PriviousOwner = _ownerService.ReadOwner(dto.PriviousOwnerID.Value);// new Owner() { Id = pet.PriviousOwnerID };
+                    List<PetOwner> updatedList = new List<PetOwner>();
+                    for (int i = 0; i < dto.PriviousOwners.Length; i++)
+                    {
+                        PetOwner temp = new PetOwner() {
+                            Pet = pet,
+                            PetID = pet.Id.Value,
+                            Owner = _ownerService.ReadOwner(dto.PriviousOwners[i]),
+                            OwnerID = dto.PriviousOwners[i]
+                        };
+
+                        updatedList.Add(temp);
+                    }
+                    pet.PreviousOwners = updatedList;
                 }
 
                 return _petService.UpdatePet(pet);
