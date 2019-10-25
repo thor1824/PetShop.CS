@@ -22,6 +22,7 @@ namespace PetShop.Infrastructure.DataWithEntity
             
             modelBuilder.Entity<PetOwner>()
                 .HasKey(po => new { po.PetID, po.OwnerID });
+
             modelBuilder.Entity<PetOwner>()
                 .HasOne(po => po.Pet)
                 .WithMany(p => p.PreviousOwners)
