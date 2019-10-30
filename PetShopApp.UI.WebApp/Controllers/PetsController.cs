@@ -25,11 +25,12 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<PagedList<Pet>> Get([FromQuery]int pageIndex, [FromQuery]int pageSize)
         {
+
             try
             {
-                return _petService.ReadAllPet();
+                return _petService.ReadAllPet(new PageFilter() {pageSize=pageSize, pageIndex=pageIndex });
             }
             catch (Exception e)
             {

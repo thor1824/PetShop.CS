@@ -8,7 +8,7 @@ namespace PetShopApp.Core.ApplicationService
     {
         Pet CreatePet(Pet pet);
         Pet DeletePet(int id);
-        List<Pet> ReadAllPet();
+        PagedList<Pet> ReadAllPet(PageFilter pf);
         Pet ReadPetByID(int id);
         Pet UpdatePet(Pet pet);
         List<Pet> SeachByType(PetType.PType type);

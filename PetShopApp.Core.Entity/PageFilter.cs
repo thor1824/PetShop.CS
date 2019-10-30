@@ -4,7 +4,9 @@ using System.Text;
 
 namespace PetShopApp.Core.Entity
 {
-    class FiltedList
+    public class PageFilter
     {
+        public int pageIndex { get; set; }
+        public int pageSize { get; set; }
     }
 }

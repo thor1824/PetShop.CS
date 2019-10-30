@@ -50,10 +50,23 @@ namespace PetShopApp.Core.ApplicationService.Impl
 
             return _repo.Read(id);
         }
-        public List<Pet> ReadAllPet()
+        public PagedList<Pet> ReadAllPet(PageFilter pf)
         {
-            return _repo.ReadAll().ToList();
+            IEnumerable<Pet> list = _repo.ReadAll();
+            int total = list.Count();
+            int pageTotal = total / pf.pageSize;
+            return new PagedList<Pet>()
+            {
+                data = list.Skip((pf.pageIndex) * pf.pageSize).Take(pf.pageSize).ToList(),
+                itemsPrPage = pf.pageSize,
+                itemsTotal = total,
+                pageIndex = pf.pageIndex,
+                pageTotal = pageTotal
+            };
+
         }
+
+
         public Pet UpdatePet(Pet pet)
         {
             if (CheckNameContainsNumbers(pet))
