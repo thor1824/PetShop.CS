@@ -96,12 +96,12 @@ namespace PetShopApp.UI.WebApp.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public ActionResult<Pet> Put(int id, [FromBody] DTOUpdatePet dto)
+        [HttpPut]
+        public ActionResult<Pet> Put([FromBody] DTOUpdatePet dto)
         {
             try
             {
-                Pet pet = _petService.ReadPetByID(id);
+                Pet pet = _petService.ReadPetByID(dto.Id);
                 if (dto.Name != null)
                 {
                     pet.Name = dto.Name; 

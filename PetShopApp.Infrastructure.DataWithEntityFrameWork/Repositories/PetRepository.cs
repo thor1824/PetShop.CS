@@ -20,7 +20,9 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 
         public Pet Create(Pet entity)
         {
-            return _ctx.Pets.Add(entity).Entity;
+            Pet pet = _ctx.Pets.Add(entity).Entity;
+            _ctx.SaveChanges();
+            return pet;
         }
 
         public Pet Delete(Pet entity)
