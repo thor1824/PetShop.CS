@@ -6,13 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using PetShopApp.Core.Entity;
 
-
 namespace PetShop.Infrastructure.DataWithEntity
 {
     public class PetShopAppContext : DbContext
     {
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owners { get; set; }
+
+        public DbSet<User> Users { get; set; } 
+
+        public DbSet<Species> Species { get; set; }
 
         public PetShopAppContext(DbContextOptions<PetShopAppContext> opt) : base(opt) { }
 
