@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PetShopApp.UI.WebApp.DTO
 {
-    public class DTO_GetPet
+    public class DTOGetPet
     {
 
-        public DTO_GetPet(Pet pet)
+        public DTOGetPet(Pet pet)
         {
             Id = pet.Id;
             Name = pet.Name;

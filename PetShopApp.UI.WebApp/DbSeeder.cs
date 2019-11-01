@@ -14,6 +14,24 @@ namespace PetShopApp.UI.WebApp
             ctx.Database.EnsureDeleted();
             if (ctx.Database.EnsureCreated())
             {
+                string password = "1234";
+                //byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
+                //authenticationHelper.CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
+                //authenticationHelper.CreatePasswordHash(password, out passwordHashAnn, out passwordSaltAnn);
+
+                List<User> users = new List<User> {
+                new User {
+                    Username = "UserJoe",
+                    Password = password,
+                    IsAdmin = false
+                },
+                new User {
+                    Username = "AdminAnn",
+                    Password = password,
+                    IsAdmin = true
+                }
+                };
+   
                 Owner own1 = ctx.Owners.Add(new Owner()
                 {
                     FirstName = "John",

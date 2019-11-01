@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PetShopApp.Core.Entity
 {
-    class Filter
+    public class Species
     {
+        
     }
 }
