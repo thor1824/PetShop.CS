@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.Entity;
 using PetShopApp.UI.WebApp.DTO;
+using System;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +23,7 @@ namespace PetShopApp.UI.WebApp.Controllers
         }
 
 
-        // GET: api/<controller>
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Owner>> Get()
         {
@@ -36,10 +35,10 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
-        // GET api/<controller>/5
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Owner> Get(int id)
         {
@@ -51,16 +50,17 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
-        // POST api/<controller>
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Owner> Post([FromBody]DTOOwner owner)
         {
             try
             {
-                Owner newOwner = new Owner {
+                Owner newOwner = new Owner
+                {
                     FirstName = owner.FirstName,
                     LastName = owner.LastName,
                     Address = owner.Address,
@@ -88,10 +88,10 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
-        // PUT api/<controller>/5
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public ActionResult<Owner> Put(int id, [FromBody]DTOOwner owner)
         {
@@ -142,7 +142,7 @@ namespace PetShopApp.UI.WebApp.Controllers
             }
         }
 
-        // DELETE api/<controller>/5
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<Owner> Delete(int id)
         {
@@ -154,7 +154,7 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
     }
 }

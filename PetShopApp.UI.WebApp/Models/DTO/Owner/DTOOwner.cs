@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PetShopApp.UI.WebApp.DTO
+﻿namespace PetShopApp.UI.WebApp.DTO
 {
     public class DTOOwner
     {

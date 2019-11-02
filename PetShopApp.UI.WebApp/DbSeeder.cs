@@ -1,37 +1,47 @@
 ﻿using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.Entity;
+using PetShopApp.UI.WebApp.Helper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PetShopApp.UI.WebApp
 {
-    public class DbSeeder
+    public class DbSeeder : IDbSeeder
     {
-        public static void Seed(PetShopAppContext ctx)
+
+        private readonly IAuthenticationHelper authenticationHelper;
+
+        public DbSeeder(IAuthenticationHelper authHelper)
+        {
+            authenticationHelper = authHelper;
+        }
+
+        public void Seed(PetShopAppContext ctx)
         {
             ctx.Database.EnsureDeleted();
             if (ctx.Database.EnsureCreated())
             {
                 string password = "1234";
-                //byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
-                //authenticationHelper.CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
-                //authenticationHelper.CreatePasswordHash(password, out passwordHashAnn, out passwordSaltAnn);
+                authenticationHelper.CreatePasswordHash(password, out byte[] passwordHashJoe, out byte[] passwordSaltJoe);
+                authenticationHelper.CreatePasswordHash(password, out byte[] passwordHashAnn, out byte[] passwordSaltAnn);
 
-                List<User> users = new List<User> {
-                new User {
-                    Username = "UserJoe",
-                    Password = password,
-                    IsAdmin = false
-                },
-                new User {
-                    Username = "AdminAnn",
-                    Password = password,
-                    IsAdmin = true
-                }
+                List<User> users = new List<User>
+                {
+                    new User {
+                        Username = "UserJoe",
+                        PasswordHash = passwordHashJoe,
+                        PasswordSalt = passwordSaltJoe,
+                        IsAdmin = false
+                    },
+                    new User {
+                        Username = "AdminAnn",
+                        PasswordHash = passwordHashAnn,
+                        PasswordSalt = passwordSaltAnn,
+                        IsAdmin = true
+                    }
                 };
-   
+                ctx.Users.AddRange(users);
+
                 Owner own1 = ctx.Owners.Add(new Owner()
                 {
                     FirstName = "John",
@@ -56,7 +66,7 @@ namespace PetShopApp.UI.WebApp
                     Email = "Geo@email.com",
                     PhoneNumber = "66666666"
                 }).Entity;
-                ctx.SaveChanges();
+
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Johnbo1",

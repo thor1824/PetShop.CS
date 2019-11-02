@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PetShopApp.Core.Entity
 {
     public class Owner
     {
-        
+
 
         public Owner(long id, string firstName, string lastName, string address, string phoneNumber, string email)
         {
             this.Id = id;
-            this.FirstName = firstName; 
+            this.FirstName = firstName;
             this.LastName = lastName;
             this.Address = address;
             this.PhoneNumber = phoneNumber;
@@ -24,7 +22,7 @@ namespace PetShopApp.Core.Entity
 
         public override string ToString()
         {
-            return "[ID: "+ Id +", Name: "+ FirstName + " " + LastName +", Address: " + Address+", Phone: " + PhoneNumber+", Email: "+ Email + "]";
+            return "[ID: " + Id + ", Name: " + FirstName + " " + LastName + ", Address: " + Address + ", Phone: " + PhoneNumber + ", Email: " + Email + "]";
         }
 
         public bool HasId { get { return Id.HasValue; } }

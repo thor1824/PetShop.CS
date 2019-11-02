@@ -2,14 +2,12 @@
 using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PetShopApp.Infrastructure.SQL.Repositories
 {
-    class UserRepository : IRepository<User>
+    public class UserRepository : IRepository<User>
     {
         private readonly PetShopAppContext _ctx;
 
@@ -34,7 +32,7 @@ namespace PetShopApp.Infrastructure.SQL.Repositories
 
         public User Read(long id)
         {
-            return _ctx.Users.FirstOrDefault(p => p.id == id);
+            return _ctx.Users.FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<User> ReadAll()
@@ -44,11 +42,12 @@ namespace PetShopApp.Infrastructure.SQL.Repositories
 
         public User Update(User entity)
         {
-            var result = Read(entity.id);
+            var result = Read(entity.Id);
             if (result != null)
             {
                 result.Username = entity.Username;
-                result.Password = entity.Password;
+                result.PasswordHash = entity.PasswordHash;
+                result.PasswordSalt = result.PasswordSalt;
                 result.IsAdmin = entity.IsAdmin;
                 _ctx.SaveChanges();
                 return result;

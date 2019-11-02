@@ -2,10 +2,8 @@
 using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
 {
@@ -45,7 +43,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
             return _ctx.Owners
                 .Include(o => o.PreviousOwnedPets)
                 .ThenInclude(po => po.Pet)
-                .ToList(); 
+                .ToList();
         }
 
         public Owner Update(Owner entity)

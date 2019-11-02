@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using PetShopApp.Core.DomainService;
+﻿using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace PetShopApp.Core.ApplicationService.Impl

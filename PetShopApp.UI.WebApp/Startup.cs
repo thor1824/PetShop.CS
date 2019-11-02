@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using PetShop.Infrastructure.DataWithEntity;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.ApplicationService.Impl;
 using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
 using PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories;
-//using PetShopApp.Infrastructure.SQLite.Repositories;
+using PetShopApp.Infrastructure.SQL.Repositories;
+using PetShopApp.UI.WebApp.Helper;
+using System;
 
 namespace PetShopApp.UI.WebApp
 {
@@ -34,6 +31,28 @@ namespace PetShopApp.UI.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Create a byte array with random values. This byte array is used
+            // to generate a key for signing JWT tokens.
+            Byte[] secretBytes = new byte[40];
+            Random rand = new Random();
+            rand.NextBytes(secretBytes);
+
+            // Add JWT based authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    //ValidAudience = "TodoApiClient",
+                    ValidateIssuer = false,
+                    //ValidIssuer = "TodoApi",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+                    ValidateLifetime = true, //validate the expiration and not before values in the token
+                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+                };
+            });
+
             if (Env.IsDevelopment())
             {
                 services.AddDbContext<PetShopAppContext>(opt => opt.UseSqlite("Data Source = PetApp.db"));
@@ -42,43 +61,66 @@ namespace PetShopApp.UI.WebApp
             {
                 services.AddDbContext<PetShopAppContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             }
+
+            services.AddScoped<IRepository<Pet>, PetRepository>();
+            services.AddScoped<IRepository<Owner>, OwnerRepository>();
+            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IRepository<Species>, SpeciesRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPetService, PetService>();
+            services.AddScoped<IOwnerService, OwnerService>();
+
+            services.AddTransient<IDbSeeder, DbSeeder>();
+
+            services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddMvc().AddJsonOptions(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddScoped<IRepository<Pet>, PetRepository>();
-            services.AddScoped<IRepository<Owner>, OwnerRepository>();
-            services.AddScoped<IPetService, PetService>();
-            services.AddScoped<IOwnerService, OwnerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
-
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var ctx = scope.ServiceProvider.GetService<PetShopAppContext>();
-                    DbSeeder.Seed(ctx);
+                    // Initialize the database
+                    var services = scope.ServiceProvider;
+                    PetShopAppContext ctx = services.GetService<PetShopAppContext>();
+                    IDbSeeder seeder = services.GetService<IDbSeeder>();
+                    seeder.Seed(ctx);
+                    app.UseDeveloperExceptionPage();
                 }
 
-                app.UseDeveloperExceptionPage();
             }
             else
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var ctx = scope.ServiceProvider.GetService<PetShopAppContext>();
-                    DbSeeder.Seed(ctx);
+                    // Initialize the database
+                    var services = scope.ServiceProvider;
+                    PetShopAppContext ctx = services.GetService<PetShopAppContext>();
+                    IDbSeeder seeder = services.GetService<IDbSeeder>();
+                    seeder.Seed(ctx);
+                    seeder.Seed(ctx);
+                    app.UseHsts();
                 }
-
-                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+
+            // Enable CORS (must precede app.UseMvc()):
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            //app.UseHttpsRedirection();
+
+            // Use authentication
+            app.UseAuthentication();
+
             app.UseMvc();
         }
     }

@@ -2,11 +2,10 @@
 using PetShopApp.Core.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PetShopApp.Infrastructure.SQL.Repositories
 {
-    class SpeciesRepository : IRepository<Species>
+    public class SpeciesRepository : IRepository<Species>
     {
         public Species Create(Species entity)
         {

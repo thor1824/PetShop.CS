@@ -1,46 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PetShopApp.Core.ApplicationService;
+using PetShopApp.UI.WebApp.Helper;
+using PetShopApp.UI.WebApp.Models;
 
 namespace PetShopApp.UI.WebApp.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class TokenController : ControllerBase
+    public class TokenController : Controller
     {
-        // GET: api/Token
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IAuthenticationHelper authenticationHelper;
+        private readonly ILoginService _log;
+
+        public TokenController(ILoginService log, IAuthenticationHelper authService)
         {
-            return new string[] { "value1", "value2" };
+            _log = log;
+            authenticationHelper = authService;
         }
 
-        // GET: api/Token/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST: api/Token
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Login([FromBody]LoginInputModel model)
         {
+            var user = _log.Login(model.Username);
+
+            // check if username exists
+            if (user == null)
+                return Unauthorized();
+
+            // check if password is correct
+            if (!authenticationHelper.VerifyPasswordHash(model.Password, user.PasswordHash, user.PasswordSalt))
+                return Unauthorized();
+
+            // Authentication successful
+            return Ok(new
+            {
+                username = user.Username,
+                token = authenticationHelper.GenerateToken(user)
+            });
         }
 
-        // PUT: api/Token/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
+

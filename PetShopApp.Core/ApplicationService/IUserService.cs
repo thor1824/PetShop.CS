@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PetShopApp.Core.ApplicationService.Impl
 {
-    interface IUserService
+    public interface IUserService
     {
         User Create(User user);
 
@@ -14,6 +14,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
         User Update(User user);
 
         User Delete(int id);
+
 
     }
 }

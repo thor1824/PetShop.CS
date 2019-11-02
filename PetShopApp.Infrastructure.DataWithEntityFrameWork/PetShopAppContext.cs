@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PetShopApp.Core.Entity;
 
 namespace PetShop.Infrastructure.DataWithEntity
@@ -13,7 +8,7 @@ namespace PetShop.Infrastructure.DataWithEntity
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owners { get; set; }
 
-        public DbSet<User> Users { get; set; } 
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Species> Species { get; set; }
 
@@ -22,7 +17,7 @@ namespace PetShop.Infrastructure.DataWithEntity
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.Entity<PetOwner>()
                 .HasKey(po => new { po.PetID, po.OwnerID });
 
@@ -30,7 +25,7 @@ namespace PetShop.Infrastructure.DataWithEntity
                 .HasOne(po => po.Pet)
                 .WithMany(p => p.PreviousOwners)
                 .HasForeignKey(bc => bc.PetID);
-            
+
             modelBuilder.Entity<PetOwner>()
                 .HasOne(po => po.Owner)
                 .WithMany(o => o.PreviousOwnedPets)

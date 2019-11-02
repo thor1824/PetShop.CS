@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using PetShopApp.Core.Entity;
+﻿using PetShopApp.Core.Entity;
 using PetShopApp.Core.Entity.Enum;
+using System.Collections.Generic;
 
 namespace PetShopApp.Core.ApplicationService
 {

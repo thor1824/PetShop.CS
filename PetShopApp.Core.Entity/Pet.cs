@@ -1,16 +1,15 @@
 ﻿using PetShopApp.Core.Entity.Enum;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PetShopApp.Core.Entity
 {
-    
 
-    
+
+
     public class Pet
     {
-        
+
 
         public Pet()
         {
@@ -27,7 +26,7 @@ namespace PetShopApp.Core.Entity
             this.Color = color;
             //this.PriviousOwner = priviousOwner;
             this.Price = price;
-            
+
         }
 
         public string getFormatteDate(DateTime dateTime)
@@ -38,17 +37,17 @@ namespace PetShopApp.Core.Entity
         public override string ToString()
         {
             return "[ID: " + Id +
-                ", Name: " + Name + 
-                ", Type: " + (PType == null ? "N/A": PType.ToString()) + 
-                ", Color: " + Color + 
-                ", Price: " + (Price == null ? "N/A" : Price.ToString()) + 
+                ", Name: " + Name +
+                ", Type: " + (PType == null ? "N/A" : PType.ToString()) +
+                ", Color: " + Color +
+                ", Price: " + (Price == null ? "N/A" : Price.ToString()) +
                 //", Privious Owner: " + (PriviousOwner == null ? "N/A" : PriviousOwner.FirstName + " " + PriviousOwner.LastName) + 
-                ", Birthday: " + (BirthDate.Value == null ? "N/A" : getFormatteDate(BirthDate.Value)) + 
+                ", Birthday: " + (BirthDate.Value == null ? "N/A" : getFormatteDate(BirthDate.Value)) +
                 ", Date of Sale: " + (SoldDate == null ? "N/A" : getFormatteDate(SoldDate.Value)) + "]";
         }
 
         public bool HasId { get { return Id.HasValue; } }
-        public long? Id { get; set;}
+        public long? Id { get; set; }
         public string Name { get; set; }
         public PetType.PType? PType { get; set; }
         public DateTime? BirthDate { get; set; }

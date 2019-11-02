@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PetShopApp.Core.ApplicationService;
 using PetShopApp.Core.Entity;
 using PetShopApp.UI.WebApp.DTO;
+using System;
+using System.Collections.Generic;
 
 namespace PetShopApp.UI.WebApp.Controllers
 {
@@ -22,24 +21,23 @@ namespace PetShopApp.UI.WebApp.Controllers
             this._petService = petService;
         }
 
-
-        // GET api/values
+        [Authorize]
         [HttpGet]
         public ActionResult<PagedList<Pet>> Get([FromQuery]int pageIndex, [FromQuery]int pageSize)
         {
 
             try
             {
-                return _petService.ReadAllPet(new PageFilter() {pageSize=pageSize, pageIndex=pageIndex });
+                return _petService.ReadAllPet(new PageFilter() { pageSize = pageSize, pageIndex = pageIndex });
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
-        // GET api/values/5
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
@@ -51,9 +49,10 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] DTOCreatePet dto)
         {
@@ -95,7 +94,7 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         }
 
-        // PUT api/values/5
+        [Authorize(Roles = "Administrator")]
         [HttpPut]
         public ActionResult<Pet> Put([FromBody] DTOUpdatePet dto)
         {
@@ -104,7 +103,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                 Pet pet = _petService.ReadPetByID(dto.Id);
                 if (dto.Name != null)
                 {
-                    pet.Name = dto.Name; 
+                    pet.Name = dto.Name;
                 }
                 if (dto.PType != null)
                 {
@@ -116,7 +115,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                 }
                 if (dto.SoldDate != null)
                 {
-                    pet.SoldDate = dto.SoldDate; 
+                    pet.SoldDate = dto.SoldDate;
                 }
                 if (dto.Price != null)
                 {
@@ -131,7 +130,8 @@ namespace PetShopApp.UI.WebApp.Controllers
                     List<PetOwner> updatedList = new List<PetOwner>();
                     for (int i = 0; i < dto.PriviousOwners.Length; i++)
                     {
-                        PetOwner temp = new PetOwner() {
+                        PetOwner temp = new PetOwner()
+                        {
                             Pet = pet,
                             PetID = pet.Id.Value,
                             Owner = _ownerService.ReadOwner(dto.PriviousOwners[i]),
@@ -151,8 +151,7 @@ namespace PetShopApp.UI.WebApp.Controllers
             }
         }
 
-
-        // DELETE api/values/5
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<Pet> Delete(int id)
         {
@@ -164,7 +163,7 @@ namespace PetShopApp.UI.WebApp.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PetShopApp.Core.ApplicationService.Impl
 {
-    class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _repo;
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PetShopApp.Core.DomainService
 {
@@ -15,6 +13,6 @@ namespace PetShopApp.Core.DomainService
         T Update(T entity);
 
         T Delete(T entity);
-        
+
     }
 }
