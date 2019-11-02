@@ -37,7 +37,7 @@ namespace PetShopApp.Infrastructure.SQL.Repositories
 
         public IEnumerable<User> ReadAll()
         {
-            return _ctx.Users.ToList();
+            return _ctx.Users;
         }
 
         public User Update(User entity)

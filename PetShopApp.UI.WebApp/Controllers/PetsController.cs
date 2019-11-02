@@ -23,12 +23,43 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult<PagedList<Pet>> Get([FromQuery]int pageIndex, [FromQuery]int pageSize)
+        public ActionResult<PagedList<DTOGetPet>> Get([FromQuery]int pageIndex, [FromQuery]int pageSize)
         {
 
             try
             {
-                return _petService.ReadAllPet(new PageFilter() { pageSize = pageSize, pageIndex = pageIndex });
+                PagedList<Pet> pets = _petService.ReadAllPet(new PageFilter() { PageSize = pageSize, PageIndex = pageIndex });
+                List<DTOGetPet> temp = new List<DTOGetPet>();
+
+                foreach (var pet in pets.Data)
+                {
+                    List<Owner> po = new List<Owner>();
+                    foreach (var ownerPet in pet.PreviousOwners)
+                    {
+                        po.Add(ownerPet.Owner);
+                    }
+                    temp.Add(new DTOGetPet()
+                    {
+                        Id = pet.Id,
+                        Name = pet.Name,
+                        Species = pet.Species.Name,
+                        BirthDate = pet.BirthDate,
+                        SoldDate = pet.SoldDate,
+                        Price = pet.Price,
+                        Color = pet.Color,
+
+
+                    });
+                }
+
+                return new PagedList<DTOGetPet>()
+                {
+                    Data = temp,
+                    ItemsPrPage = pets.ItemsPrPage,
+                    ItemsTotal = pets.ItemsTotal,
+                    PageIndex = pets.PageIndex,
+                    PageTotal = pets.PageTotal
+                };
             }
             catch (Exception e)
             {
@@ -64,7 +95,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                     BirthDate = dto.BirthDate,
                     Color = dto.Color,
                     Price = dto.Price,
-                    PType = dto.PType
+                    Species = dto.Species
 
                 };
                 if (dto.PriviousOwners != null)
@@ -105,9 +136,9 @@ namespace PetShopApp.UI.WebApp.Controllers
                 {
                     pet.Name = dto.Name;
                 }
-                if (dto.PType != null)
+                if (dto.Species != null)
                 {
-                    pet.PType = dto.PType;
+                    pet.Species = dto.Species;
                 }
                 if (dto.BirthDate != null)
                 {

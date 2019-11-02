@@ -42,6 +42,26 @@ namespace PetShopApp.UI.WebApp
                 };
                 ctx.Users.AddRange(users);
 
+                Species sp1 = ctx.Species.Add(new Species()
+                {
+                    Name = "ged"
+                }).Entity;
+
+                Species sp2 = ctx.Species.Add(new Species()
+                {
+                    Name = "hund"
+                }).Entity;
+
+                Species sp3 = ctx.Species.Add(new Species()
+                {
+                    Name = "kat"
+                }).Entity;
+
+                Species sp4 = ctx.Species.Add(new Species()
+                {
+                    Name = "dværgsilkeabe"
+                }).Entity;
+
                 Owner own1 = ctx.Owners.Add(new Owner()
                 {
                     FirstName = "John",
@@ -70,7 +90,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Johnbo1",
-                    PType = Core.Entity.Enum.PetType.PType.Cat,
+                    Species = sp1,
                     BirthDate = new DateTime(1999, 1, 1),
                     SoldDate = new DateTime(2000, 1, 1),
                     Color = "Brown",
@@ -83,7 +103,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Jimbo2",
-                    PType = Core.Entity.Enum.PetType.PType.Dog,
+                    Species = sp2,
                     BirthDate = new DateTime(2001, 1, 1),
                     SoldDate = new DateTime(2002, 1, 1),
                     Color = "Black",
@@ -96,7 +116,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo3",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp3,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -105,7 +125,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo4",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp4,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -114,7 +134,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo5",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp1,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -123,7 +143,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo6",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp2,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -132,7 +152,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo7",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp3,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -141,7 +161,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo8",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp4,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -150,7 +170,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo9",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp1,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -159,7 +179,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo10",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp2,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -168,7 +188,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo11",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp3,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -177,7 +197,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo12",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp4,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -186,7 +206,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo13",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp1,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -195,7 +215,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo14",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp2,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -204,7 +224,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo15",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp3,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",
@@ -213,88 +233,7 @@ namespace PetShopApp.UI.WebApp
                 ctx.Pets.Add(new Pet()
                 {
                     Name = "Geobo16",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo17",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo18",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo19",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo20",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo21",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo22",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo23",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo24",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
-                    BirthDate = new DateTime(2003, 1, 1),
-                    SoldDate = new DateTime(2004, 1, 1),
-                    Color = "Yellow",
-                    Price = 10.0
-                });
-                ctx.Pets.Add(new Pet()
-                {
-                    Name = "Geobo25",
-                    PType = Core.Entity.Enum.PetType.PType.Goat,
+                    Species = sp4,
                     BirthDate = new DateTime(2003, 1, 1),
                     SoldDate = new DateTime(2004, 1, 1),
                     Color = "Yellow",

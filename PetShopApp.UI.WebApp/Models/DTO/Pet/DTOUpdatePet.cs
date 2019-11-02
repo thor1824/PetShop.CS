@@ -1,4 +1,5 @@
-﻿using PetShopApp.Core.Entity.Enum;
+﻿using PetShopApp.Core.Entity;
+using PetShopApp.Core.Entity.Enum;
 using System;
 
 namespace PetShopApp.UI.WebApp.DTO
@@ -7,7 +8,7 @@ namespace PetShopApp.UI.WebApp.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public PetType.PType? PType { get; set; }
+        public Species Species { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? SoldDate { get; set; }
         public double? Price { get; set; }

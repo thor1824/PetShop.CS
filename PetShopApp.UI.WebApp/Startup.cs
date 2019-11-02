@@ -70,6 +70,7 @@ namespace PetShopApp.UI.WebApp
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<ISpeciesService, SpeciesService>();
 
             services.AddTransient<IDbSeeder, DbSeeder>();
 

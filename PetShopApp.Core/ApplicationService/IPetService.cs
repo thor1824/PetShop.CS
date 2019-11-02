@@ -11,8 +11,7 @@ namespace PetShopApp.Core.ApplicationService
         PagedList<Pet> ReadAllPet(PageFilter pf);
         Pet ReadPetByID(int id);
         Pet UpdatePet(Pet pet);
-        List<Pet> SeachByType(PetType.PType type);
-        SortedList<int, PetType.PType> getPetTypeInSortedList();
+        List<Pet> SeachByType(Species species);
         List<Pet> ReadAllByCheapest();
 
     }

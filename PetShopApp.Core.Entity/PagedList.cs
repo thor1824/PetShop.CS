@@ -4,10 +4,10 @@ namespace PetShopApp.Core.Entity
 {
     public class PagedList<T>
     {
-        public int pageIndex { get; set; }
-        public int pageTotal { get; set; }
-        public int itemsPrPage { get; set; }
-        public int itemsTotal { get; set; }
-        public ICollection<T> data { get; set; }
+        public int PageIndex { get; set; }
+        public int PageTotal { get; set; }
+        public int ItemsPrPage { get; set; }
+        public int ItemsTotal { get; set; }
+        public ICollection<T> Data { get; set; }
     }
 }

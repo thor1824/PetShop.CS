@@ -41,6 +41,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
         public IEnumerable<Pet> ReadAll()
         {
             return _ctx.Pets
+                .Include(pet => pet.Species)
                 .Include(pet => pet.PreviousOwners)
                 .ThenInclude(p => p.Owner)
                 .ToList();
@@ -52,7 +53,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
             if (result != null)
             {
                 result.Name = entity.Name;
-                result.PType = entity.PType;
+                result.Species = entity.Species;
                 result.BirthDate = entity.BirthDate;
                 result.SoldDate = entity.SoldDate;
                 result.Color = entity.Color;

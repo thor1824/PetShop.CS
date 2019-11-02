@@ -9,7 +9,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
 {
     public class OwnerService : IOwnerService
     {
-        private IRepository<Owner> _repo;
+        private readonly IRepository<Owner>  _repo;
 
         public OwnerService(IRepository<Owner> ownerRepo)
         {
@@ -33,7 +33,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
             {
                 throw new InvalidDataException("Phone Number Contain 1 or more letters and spaces.");
             }
-            if (checkPhoneNUmmberTooShort(owner))
+            if (CheckPhoneNUmmberTooShort(owner))
             {
                 throw new InvalidDataException("Phone number must be 8 Numeric Characters long.");
             }
@@ -83,7 +83,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
             {
                 throw new InvalidDataException("Phone Number Contain 1 or more letters and spaces.");
             }
-            if (checkPhoneNUmmberTooShort(owner))
+            if (CheckPhoneNUmmberTooShort(owner))
             {
                 throw new InvalidDataException("Phone number must be 8 Numeric Characters long.");
             }
@@ -159,7 +159,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
             return true;
         }
 
-        private static bool checkPhoneNUmmberTooShort(Owner owner)
+        private static bool CheckPhoneNUmmberTooShort(Owner owner)
         {
             if (owner.PhoneNumber.Length != 8)
             {

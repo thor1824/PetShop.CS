@@ -1,7 +1,7 @@
 ﻿using PetShopApp.Core.Entity;
 using System.Collections.Generic;
 
-namespace PetShopApp.Core.ApplicationService.Impl
+namespace PetShopApp.Core.ApplicationService
 {
     public interface IUserService
     {

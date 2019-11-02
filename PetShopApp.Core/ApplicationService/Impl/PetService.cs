@@ -53,14 +53,14 @@ namespace PetShopApp.Core.ApplicationService.Impl
         {
             IEnumerable<Pet> list = _repo.ReadAll();
             int total = list.Count();
-            int pageTotal = total / pf.pageSize;
+            int pageTotal = total / pf.PageSize;
             return new PagedList<Pet>()
             {
-                data = list.Skip((pf.pageIndex) * pf.pageSize).Take(pf.pageSize).ToList(),
-                itemsPrPage = pf.pageSize,
-                itemsTotal = total,
-                pageIndex = pf.pageIndex,
-                pageTotal = pageTotal
+                Data = list.Skip((pf.PageIndex) * pf.PageSize).Take(pf.PageSize).ToList(),
+                ItemsPrPage = pf.PageSize,
+                ItemsTotal = total,
+                PageIndex = pf.PageIndex,
+                PageTotal = pageTotal
             };
 
         }
@@ -93,22 +93,11 @@ namespace PetShopApp.Core.ApplicationService.Impl
             return pet;
         }
 
-        public List<Pet> SeachByType(PetType.PType type)
+        public List<Pet> SeachByType(Species species)
         {
-            return _repo.ReadAll().Where((pet) => pet.PType.Equals(type)).ToList();
+            return _repo.ReadAll().Where((pet) => pet.Species.Id.Equals(species)).ToList();
         }
 
-        public SortedList<int, PetType.PType> getPetTypeInSortedList()
-        {
-            SortedList<int, PetType.PType> types = new SortedList<int, PetType.PType>();
-            int i = 1;
-            foreach (var item in PetType.GetTypes())
-            {
-                types.Add(i, item);
-                i++;
-            }
-            return types;
-        }
 
         public List<Pet> ReadAllByCheapest()
         {
