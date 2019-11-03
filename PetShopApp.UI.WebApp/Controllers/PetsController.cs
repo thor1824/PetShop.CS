@@ -47,7 +47,8 @@ namespace PetShopApp.UI.WebApp.Controllers
                         SoldDate = pet.SoldDate,
                         Price = pet.Price,
                         Color = pet.Color,
-
+                        ImageUrl = pet.ImageUrl,
+                        PreviousOwners = po
 
                     });
                 }
@@ -70,11 +71,29 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public ActionResult<Pet> Get(int id)
+        public ActionResult<DTOGetPet> Get(int id)
         {
             try
             {
-                return _petService.ReadPetByID(id);
+                Pet pet = _petService.ReadPetByID(id);
+                List<Owner> po = new List<Owner>();
+                foreach (var ownerPet in pet.PreviousOwners)
+                {
+                    po.Add(ownerPet.Owner);
+                }
+                return new DTOGetPet()
+                {
+                    Id = pet.Id,
+                    Name = pet.Name,
+                    Species = pet.Species.Name,
+                    BirthDate = pet.BirthDate,
+                    SoldDate = pet.SoldDate,
+                    Price = pet.Price,
+                    Color = pet.Color,
+                    ImageUrl = pet.ImageUrl,
+                    PreviousOwners = po
+
+                };
             }
             catch (Exception e)
             {

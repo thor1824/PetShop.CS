@@ -21,7 +21,7 @@ namespace PetShopApp.UI.WebApp.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Species>> Get()
         {
@@ -36,7 +36,7 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public ActionResult<Species> Get(int id)
         {
@@ -51,7 +51,7 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<Species> Post([FromBody]Species species)
         {
@@ -70,7 +70,7 @@ namespace PetShopApp.UI.WebApp.Controllers
 
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPut]
         public ActionResult<Species> Put([FromBody]Species species)
         {
