@@ -14,11 +14,12 @@ namespace PetShopApp.UI.WebApp.Controllers
     {
         private readonly IPetService _petService;
         private readonly IOwnerService _ownerService;
-
-        public PetsController(IPetService petService, IOwnerService ownerService)
+        private readonly ISpeciesService _speciesService;
+        public PetsController(IPetService petService, IOwnerService ownerService, ISpeciesService speciesService)
         {
             this._ownerService = ownerService;
             this._petService = petService;
+            this._speciesService = speciesService;
         }
 
         [Authorize]
@@ -42,7 +43,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                     {
                         Id = pet.Id,
                         Name = pet.Name,
-                        Species = pet.Species.Name,
+                        Species = pet.Species,
                         BirthDate = pet.BirthDate,
                         SoldDate = pet.SoldDate,
                         Price = pet.Price,
@@ -85,7 +86,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                 {
                     Id = pet.Id,
                     Name = pet.Name,
-                    Species = pet.Species.Name,
+                    Species = pet.Species,
                     BirthDate = pet.BirthDate,
                     SoldDate = pet.SoldDate,
                     Price = pet.Price,
@@ -111,10 +112,12 @@ namespace PetShopApp.UI.WebApp.Controllers
                 Pet newPet = new Pet()
                 {
                     Name = dto.Name,
+                    ImageUrl = dto.ImageUrl,
                     BirthDate = dto.BirthDate,
+                    SoldDate = dto.SoldDate,
                     Color = dto.Color,
                     Price = dto.Price,
-                    Species = dto.Species
+                    Species = _speciesService.Read(dto.Species)
 
                 };
                 if (dto.PriviousOwners != null)
@@ -157,7 +160,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                 }
                 if (dto.Species != null)
                 {
-                    pet.Species = dto.Species;
+                    pet.Species = _speciesService.Read(dto.Species);
                 }
                 if (dto.BirthDate != null)
                 {

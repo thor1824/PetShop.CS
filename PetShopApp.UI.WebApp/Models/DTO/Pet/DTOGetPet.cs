@@ -11,7 +11,7 @@ namespace PetShopApp.UI.WebApp.DTO
 
         public long? Id { get; set; }
         public string Name { get; set; }
-        public string Species { get; set; }
+        public Species Species { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? SoldDate { get; set; }

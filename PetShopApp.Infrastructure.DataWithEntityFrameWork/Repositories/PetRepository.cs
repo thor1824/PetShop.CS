@@ -33,6 +33,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
         public Pet Read(long id)
         {
             return _ctx.Pets
+                .Include(pet => pet.Species)
                 .Include(pet => pet.PreviousOwners)
                 .ThenInclude(e => e.Owner)
                 .FirstOrDefault(p => p.Id == id);
