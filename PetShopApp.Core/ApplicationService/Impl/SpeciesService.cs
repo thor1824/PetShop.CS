@@ -28,7 +28,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
             return _repo.Delete(species);
         }
 
-        public Species Read(int id)
+        public Species Read(long id)
         {
             return _repo.Read(id);
         }

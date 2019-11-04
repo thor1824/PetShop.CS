@@ -7,7 +7,7 @@ namespace PetShopApp.Core.ApplicationService
     {
         Species Create(Species species);
         Species Delete(int id);
-        Species Read(int id);
+        Species Read(long id);
         List<Species> ReadAll();
         Species Update(Species species);
     }

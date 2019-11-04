@@ -8,7 +8,8 @@ namespace PetShopApp.UI.WebApp.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Species { get; set; }
+        public string ImageUrl { get; set; }
+        public Species Species { get; set; }
         public DateTime? BirthDate { get; set; }
         public DateTime? SoldDate { get; set; }
         public double? Price { get; set; }

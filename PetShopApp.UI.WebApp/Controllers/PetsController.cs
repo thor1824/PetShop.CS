@@ -160,7 +160,7 @@ namespace PetShopApp.UI.WebApp.Controllers
                 }
                 if (dto.Species != null)
                 {
-                    pet.Species = _speciesService.Read(dto.Species);
+                    pet.Species = _speciesService.Read(dto.Species.Id);
                 }
                 if (dto.BirthDate != null)
                 {
@@ -177,6 +177,10 @@ namespace PetShopApp.UI.WebApp.Controllers
                 if (dto.Color != null)
                 {
                     pet.Color = dto.Color;
+                }
+                if (dto.ImageUrl != null)
+                {
+                    pet.ImageUrl = dto.ImageUrl;
                 }
                 if (dto.PriviousOwners != null)
                 {

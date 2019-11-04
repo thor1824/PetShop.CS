@@ -55,6 +55,7 @@ namespace PetShopApp.Infrastructure.DataWithEntityFrameWork.Repositories
             {
                 result.Name = entity.Name;
                 result.Species = entity.Species;
+                result.ImageUrl = entity.ImageUrl;
                 result.BirthDate = entity.BirthDate;
                 result.SoldDate = entity.SoldDate;
                 result.Color = entity.Color;
