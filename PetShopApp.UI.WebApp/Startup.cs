@@ -71,7 +71,7 @@ namespace PetShopApp.UI.WebApp
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<ISpeciesService, SpeciesService>();
-
+            services.AddCors();
             services.AddTransient<IDbSeeder, DbSeeder>();
 
             services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
@@ -114,7 +114,7 @@ namespace PetShopApp.UI.WebApp
                 }
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             // Enable CORS (must precede app.UseMvc()):
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

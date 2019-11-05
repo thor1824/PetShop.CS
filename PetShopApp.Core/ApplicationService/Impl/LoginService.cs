@@ -14,7 +14,7 @@ namespace PetShopApp.Core.ApplicationService.Impl
         }
         public User Login(string username)
         {
-            return _repo.ReadAll().FirstOrDefault(u => u.Username == username);
+            return _repo.ReadAll().FirstOrDefault(u => u.Username.ToLower() == username.ToLower());
         }
     }
 }
